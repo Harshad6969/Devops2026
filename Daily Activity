@@ -4,14 +4,92 @@
 Devops >> developement and Operations
 Security >> Major consern in 2026 is security.
 Automation Normal Efforts  >> Cron Jobs(backup script) , trigger based.
+==============================================================================================================
 CI-CD >> Continous Integration & Continous Delpoyment or Continuos Delivery
-
 CI stages: (trigger based automation) no manual intervation
 Souce Code >> complie, unit test, build, Security >> Ready for deployment
-
 script for >> compile, unit test, build and security.
-
 Java Build gives jar or war file. java -jar xyz.jar
-
 CD stages: Continuos deployment & Continous Delivery.
+continous deployment: as soon as CI is done CD will start automatically no need to manual intervation.
+Continuos Delivery: Manual intervation require like permisson will be rquired while timeing of deployment.
+GITHUB >> CI >> Continous delivery or Continous Delpoyment.
+there must be two diffrent pipelines for CI differenet and Continous delivery differenet.
+if the changes is code is going to impact the bussiness then the we should go with continous delivery two diffrenet pipelines. but if we are using internal application then we 
+can go with single pipeline with no manual intervationa as continous deployment as its not going to impact the bussiness.
+===============================================================================================================
+Artifacts >> libraries are also part of artifacts. and jar or war files are also the artifacts, so artifacts are like packages.
+================================================================================================================
+IAC > infrastructure as Code.
+VM, Servers (K8s, OpenShift), Networking  we can do it using the UI, 100VMs creation >> we should write the script this can be done using the terraform.
+maunal effort got reduced (creating and managing the infra using the code)
+it can be used to create the same INfra setup in differenet environment
+=================================================================================================================
+Contanirazation:
+if we have java .jar file then we need to run with java -jar abc.jar along with required dependencies should be installed. so it will work on our system if we follow the dependences
+but it will failed if we run on other system.
+
+so we will create the differenet package which contains (same infra, jar file, JDK 17, java -jar abc.jar) this package will become portable and can we runned on any platform
+this is also called as Docker file.
+-===========================================================================================================
+Monitoring & Alearting (if any trigger crocess it will notify us via 
+CPU & RAM node level matrix monitoring  >> prometheus
+Profiling  >> differenet microservices using how much ram. >> Pyroscope
+Logs >> application logs >> LOKI, ELK stack 
+Tracing >> hop count done by the service or API from one part to another ( request and response ) >> Tempo
+Newly application running or not >> Blackbox exporter
+===================================================================================================================
+Environment: 
+Dev(development server developers deploy there application here new changes)
+QA (quality assurance developers written code can have the issues so removing this bugs from code is done in QA testing is done sellenium & robot framework)
+PPD (pre production environment specific nummber of users will get access to the application for end user tetsing purpose), 
+PROD (production level application deployement application from prod is avilable for everyone like end user),
+DR (Disaster recovery to prevent the downtime the DR env is created if anything goes wrong then we can directly switch to DR)
+=====================================================================================================================
+Repositories:
+Github : storing source code where different developeres can work toghter in same repo using differenet branches
+=====================================================================================================================
+Collabroation: 
+ticketing tool like JIRA and Azure Boards managed by scrum master (kan ban board)
+Developers, Devops, Testing, Infra 
+tasks should be completed or deployed in the PROD env with in the timeline
+sprint (3 weeks) >> feature
+
+TO DO >> In progress >> Paused >> IN Rivew >> Done 
+DSTUM >> Daily Standup Meeting
+==================================================================================================================
+Cluster >> combination of multiple servers, 
+==================================================================================================================
+Security:
+always follow the best practices, use shift lift security, anything newly deployed should be stand
+
+shift lift Security 
+
+Source code scan >> tools used is gitleaks (if any developer saves the password in github then it will scan the source code and chceks if any sensetive data added or not)
+Sonarqube >> performs the scan on the static code to segrate the issues like bugs, vulnerbalities, code smell its checks the qulaity of code lesser the bugs stonger the code
+Dependencies Check >> Trivy (checks which dependencies we are using checks if library is vurnable or not)
+SBOM >> sofware build of materials this provides the documents about what are things and tools we are using within the project and why do we need it.
+if any sub depenecies is missing due to which other dependencies are not working 
+Conatinerization >> scaning the dockerfile or image using the trivy tool and for scaning the the configuration file we are going to use Checkov 
+once application is deployed then we need to do Dynamic Application security Testing for testing the deployed application we use the tools like OWASP its checks what are things
+in application which can make it vurnable.
+=================================================================================================================
+Benefits: 
+Faster time to the market, 
+Quality application, 
+Reduce MTTR (Mean Time To Recovery) it can be done using monitoring and understanding the logs, 
+Better scalibility:like increasing the ram and cpu of application if required at time of high traffic.
+Cost Optimization: if traffic is there then only ram and cpu will increase
+================================================================================================================
+end to end flow 
+
+requirements comes from client >> Ticket raised in portal >> developers writes code in local >> developers tests it locally >> pushes the code into SCM (github) >> CI-CD 
+is written by devops engineer (compile the code, run test cases) >> sonarcube (code quality test) >> trivy vulnerabilities scan >> build packages nexsus artifacts >> docker build
+and tag >> trivy image scan >> docker push to save the imager into docker repo >> deploy the application to k8s using YAML file >>  erify deployment >> mail gets trigger >>
+monitoring using grafana and prometheus 
+
+
+
+
+
 
