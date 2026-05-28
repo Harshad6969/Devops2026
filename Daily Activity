@@ -1,0 +1,17 @@
+
+28-05-2026 
+
+Devops >> developement and Operations
+Security >> Major consern in 2026 is security.
+Automation Normal Efforts  >> Cron Jobs(backup script) , trigger based.
+CI-CD >> Continous Integration & Continous Delpoyment or Continuos Delivery
+
+CI stages: (trigger based automation) no manual intervation
+Souce Code >> complie, unit test, build, Security >> Ready for deployment
+
+script for >> compile, unit test, build and security.
+
+Java Build gives jar or war file. java -jar xyz.jar
+
+CD stages: Continuos deployment & Continous Delivery.
+
