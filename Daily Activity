@@ -87,6 +87,28 @@ requirements comes from client >> Ticket raised in portal >> developers writes c
 is written by devops engineer (compile the code, run test cases) >> sonarcube (code quality test) >> trivy vulnerabilities scan >> build packages nexsus artifacts >> docker build
 and tag >> trivy image scan >> docker push to save the imager into docker repo >> deploy the application to k8s using YAML file >>  erify deployment >> mail gets trigger >>
 monitoring using grafana and prometheus 
+application repo, QA CD Repo, Prod CD Repo 
+
+K8s cluster >> Argo CD 
+====================================================================================================================
+Deployment statergies :
+recreate : take down the running application and deploy the latest build and application goes live take down older version and deploy the newer one.
+rolling update: it is bydefault kubernetes deployment statergy there will be three pods of same application running and if new version is deployed then it will be deployed in 
+one pod ata time i.e if new application deployed then out of three only one pod will get updated but other two will be of old version(one by one update)
+blue green deployment: two environment present one is grenn other is blue (two version of application will be running if any update is done then it will be deployed to the green
+one and traffic will be switched to gren environment
+canary deployement: three differenet vm and pplication is deployed then the traffic is distrubuted in form of percentages (40, 20,20) i.e latest application is accessiable to
+limited no of audience and then increasing the audience step by step 
+A/B Testing: depends upon the feedback (like two application are deployed and then traffic is shifted on the terms of feedback
+feature flag:
+Ring Based: Ring 0 application assible to internal team only & Ring 1 application assible to beata version & Rimg 3 application assecccisble to all end users 
+
+Argo CD inside kubernetes (its monitors the repository and deploy the code into producation if there is any change in github code)
+security checks 
+============================================================================================================================
+Questions:
+jenkins, Github Actions, Gitlab CI-CD.
+service mesh used for defining traffic in different pods.
 
 
 
