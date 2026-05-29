@@ -152,5 +152,32 @@ r >> list names
 w >> create/delete folders
 x >> enter the folder
 
+r >> 4
+w >> 2
+x >> 1
 
+sudo visudo -f /etc/sudoers.d/elena
+sudo vi -f /etc/sudoers.d/elena
+chown 
+
+sudo usermod -aG sudo elena
+
+package management >> sotfware , versions, dependencies
+installation, upgradation,adding dependencies, remove, security updates
+
+apt >> high level management tool 
+dpkg >> low level package management tool
+snap >> tooks lots of time 
+
+sudo apt install nginx >> 
+checking from where (/etc/apt/sources.list) >> 
+repo metadata (version,name,dependencies) >> 
+dependency resolution (dependency tree, decide correct order) >>
+Downloading the packages 
+dpkage
+post installation commands (start nginx, enable it)
+
+packages get downloeded in form of deb
+
+cd /var/lib/apt/lists
 
