@@ -124,5 +124,33 @@ ls, cat >> shell >> system libraries >> glibc (open, write, close, read) >> syst
 
 ls >> shell interpreat it >> glibc librarry >> open, getdents >> kernal disk >> kernal output >> glibc >> shell going to output the information
 
+29-05-2026
+
+Users in Linux
+
+Root user >> full access >> UID 0
+Normal User >> Limitied access >> UID greater than 1000
+System Users >> users created for application purpose 
+
+when we create the user the group gets create automatically 
+
+adduser, useradd
+
+sudo apt update   
+chage -l elena
+
+drwx rwx rwx 
+-rwx rwx rwx 
+
+owner group other users 
+files>>
+r >> read content of file
+w >> modify the content of file
+x >> can execute the script
+folders>>
+r >> list names
+w >> create/delete folders
+x >> enter the folder
+
 
 
