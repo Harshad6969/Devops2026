@@ -111,7 +111,18 @@ jenkins, Github Actions, Gitlab CI-CD.
 service mesh used for defining traffic in different pods.
 
 
+============================================================================================================================
 
+
+Linux :
+
+user application(nginx, docker, kubectl), shell(bash,zsh,sh), System libraries(glibc,libssl) >> USER SPACE
+kernal (process, memory, FS) >> KERNAL SPACE
+Hardware (COU, RAM, NIC) >> HARDWARE
+
+ls, cat >> shell >> system libraries >> glibc (open, write, close, read) >> system calls >> kernal >> Hardware
+
+ls >> shell interpreat it >> glibc librarry >> open, getdents >> kernal disk >> kernal output >> glibc >> shell going to output the information
 
 
 
