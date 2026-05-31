@@ -181,3 +181,37 @@ packages get downloeded in form of deb
 
 cd /var/lib/apt/lists
 
+====================================================================
+31-5-2026
+process is the running instance of the programm
+kill
+running
+stop
+sleeping state(waiting for input)
+uninterupted state (waiting for the another process like disk or network connectivity) >> denoted by D 
+Stopped process >> denoted by T you can ctrl+z to comletely stop process
+zombie state >> when paratent process starts then it also starts the child process. when parent process does know that child process got executed then its zombie process
+idle process doing nothing >> denoted by I
+
+process created in two differenet functions fork and exe, it gets process id >> NEW 
+when we start the process it goes into queue >> its in READY state
+running >> process got executed
+waitaing state >> there may be possibility of network getting slow there can be deplay due to which process goes in waiting state as it waits for response from the server
+ready state >> run queue then running
+intterupted state >> process was running fine but aanother process with higher priority get executed then 
+waiting state >> doing nothing 
+
+ps >> process snapshort    ( a -all user, u - user oriented, x - background processes, e - all the processes, f - fullformat
+ps -ef, ps -ef, ps -aux
+
+lower the value highest the priority
+
+virt >> virtual memory
+niceness - value can wait, + value cannot vait for cpu 
+shared memory 
+htop
+background process and foregorund process
+
+signals 
+sleep 
+bg % <job_id>
