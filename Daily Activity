@@ -215,3 +215,19 @@ background process and foregorund process
 signals 
 sleep 
 bg % <job_id>
+
+sigterm 15
+sigkill 9
+sigstop 19
+sigcont 18
+
+kill -stop <ps_id>
+kill -continue <ps_id>
+
+file descriptors >> open connection to somethings
+
+ls -l /proc/1267/fd
+systemctl >> service manager taht starts the differenet processes 
+systemd
+now nginx will run as service
+
