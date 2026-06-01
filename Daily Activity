@@ -215,6 +215,7 @@ background process and foregorund process
 signals 
 sleep 
 bg % <job_id>
+fg % <job_id>
 
 sigterm 15
 sigkill 9
@@ -231,3 +232,38 @@ systemctl >> service manager taht starts the differenet processes
 systemd
 now nginx will run as service
 
+01-06-2026 
+
+ubuntu >> debian .deb
+redhat >> .rpm yum 
+
+sudo apt update
+sudo apt upgrade
+sudo apt-mark hold <package name>
+sudo apt-mark unhold <package name>
+
+directory structure >> 
+/bin, 
+/sbin, 
+/etc, 
+/dev (/dev/sda, /dev/tty)
+/proc
+/sys  >> keeps info about devices,drivers, kernals, etc
+/home
+/root
+/boot
+/media
+/var
+/tmp
+/usr
+/mnt 
+/run  >> used when booting is done
+/srv  >> used while hosting the websites and FTP 
+
+CURL is used for API testing >> curl command is little bit faster at time of download 
+wget is only used for downloading the files 
+
+process management >> view, controll, termenating, monitoring, running (foreground, background), automating
+process lifecycle >> creating, runing, sleeping, stopping, zombie 
+
+-20 is the highest priority, 19 is the lowest priority, 0 is the default priority
