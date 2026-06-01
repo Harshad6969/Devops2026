@@ -1,0 +1,193 @@
+    1  whoami
+    2  ls
+    3  pwd
+    4  ipconfig
+    5  ls
+    6  ifconfig
+    7  sudo install net-tools
+    8  sudo apt install net-tools
+    9  touch 1.txt
+   10  touch 2.txt
+   11  mkdir folder1 folder2
+   12  ld
+   13  ls
+   14  ls -a
+   15  cd folder2/
+   16  touch f1.txt
+   17  vi f1.txt
+   18  cat f1.txt
+   19  vi f1.txt
+   20  cat f1.txt
+   21  pwd
+   22  cd /etc/
+   23  ls
+   24  cat passwd
+   25  cd ..
+   26  ls
+   27  pwd
+   28  cd /home/azureuser/
+   29  pwd
+   30  ls
+   31  sudo adduser elena
+   32  id elena
+   33  sudo useradd jack
+   34  id jack
+   35  cd /etc/
+   36  cat passwd
+   37  cd /home/azureuser/
+   38  sudo - elena
+   39  su - elena
+   40  sudo apt update
+   41  su - elena
+   42  sudo passwd jack
+   43  sudo chage -E 2026-29-05 jack
+   44  sudo chage -l jack
+   45  sudo passwd -l jack
+   46  sudo passwd -u jack
+   47  sudo groupadd devops
+   48  cd /etc
+   49  cat group
+   50  cd ~
+   51  pwd
+   52  id azureuser
+   53  whoami
+   54  ifconfig
+   55  pwd
+   56  ls
+   57  cd /etc
+   58  cat group
+   59  sudo usermod -aG devops azureuser
+   60  id azureuser
+   61  sudo usermod -aG devops jack
+   62  sudo deluser jack devops
+   63  id jack
+   64  sudo delgroup devops
+   65  sudo deluser jack
+   66  cd ..
+   67  ls
+   68  sudo su
+   69  sudo usermod -aG sudo elena
+   70  su - elena
+   71  sudo visudo -f /etc/sudoers.d/elena
+   72  sudo vi -f /etc/sudoers.d/elena
+   73  exit
+   74  su - elena
+   75  sudo groupadd abc def mno
+   76  sudo groupadd abc
+   77  sudo groupadd def
+   78  sudo groupadd hij
+   79  cat /etc/group
+   80  getent group
+   81  sudo usermod -aG abc,def,hij elena
+   82  id elena
+   83  history
+   84  ls -l
+   85  chmod u+x 1.txt
+   86  ls -l
+   87  chmod o+wx 1.txt
+   88  ls -l
+   89  chmod o-x 1.txt
+   90  ls -l
+   91  chmod a+rwx 1.txt
+   92  mkdir demo
+   93  cd demo/
+   94  touch f1.txt f2.txt f3.txt
+   95  ls
+   96  tree
+   97  apt install tree
+   98  sudo apt install tree
+   99  cd ..
+  100  tree
+  101  touch .hfile.txt
+  102  ls
+  103  ls -lart
+  104  cd demo/
+  105  ls -a
+  106  ls
+  107  ls -l
+  108  cd ..
+  109  ls -l
+  110  chmod -R a+rwx demo/
+  111  cd demo/
+  112  ls
+  113  chmod 755 *
+  114  ls -l
+  115  chmod 777 *
+  116  ls -l
+  117  cd ..
+  118  cd ~/.ssh/
+  119  ls
+  120  cd ..
+  121  ssh-keygen -t ed25519 -C "created for ssh vm to vm testing"
+  122  cd ~/.ssh/
+  123  ls -l
+  124  cat id_ed25519
+  125  cat id_ed25519.pub
+  126  cd ~/.ssh/
+  127  ls
+  128  cd ..
+  129  ls
+  130  cd demo/
+  131  ls
+  132  ls -l
+  133  chown elena f1.txt
+  134  sudo chown elena f1.txt
+  135  ls -l
+  136  sudo chown :elena f1.txt
+  137  ls -l
+  138  sudo chown elena:elena f2.txt
+  139  ls -l
+  140  cd ..
+  141  sudo chown -R azureuser:azureuser demo/
+  142  ls -l
+  143  cd demo/
+  144  ls -l
+  145  history
+  146  cd
+  147  cd /etc/apt/
+  148  ls
+  149  cd sources.list.d/
+  150  ls
+  151  cat ubuntu.sources
+  152  cd
+  153  cd /var/lib/apt/lists/
+  154  ls
+  155  cd
+  156  cd /var/cache/apt/archives/
+  157  ls
+  158  cd
+  159  java
+  160  sudo apt install openjdk-21-jre-headless
+  161  sudo apt install openjdk-21-jre-headless -y
+  162  java -version
+  163  sudo apt install maven -y
+  164  mvn -version
+  165  docker
+  166  # Add Docker's official GPG key:
+  167  sudo apt update
+  168  sudo apt install ca-certificates curl
+  169  sudo install -m 0755 -d /etc/apt/keyrings
+  170  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  171  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  172  # Add the repository to Apt sources:
+  173  sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+  174  Types: deb
+  175  URIs: https://download.docker.com/linux/ubuntu
+  176  Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+  177  Components: stable
+  178  Architectures: $(dpkg --print-architecture)
+  179  Signed-By: /etc/apt/keyrings/docker.asc
+  180  EOF
+  181  sudo apt update
+  182  sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  183  sudo systemctl status docker
+  184  sudo docker run hello-world
+  185  docker ps
+  186  docker ps -a
+  187  sudo docker ps
+  188  sudo docker ps -a
+  189  history
+  190  ps
+  191  pa -a
+  192  ps -a
+  193  history
