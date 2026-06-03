@@ -267,3 +267,29 @@ process management >> view, controll, termenating, monitoring, running (foregrou
 process lifecycle >> creating, runing, sleeping, stopping, zombie 
 
 -20 is the highest priority, 19 is the lowest priority, 0 is the default priority
+
+===================================================================================================
+02-06-2026
+
+awk,sed,grep
+-,:,|,.
+
+grep, grep -i, grep -v, grep -vin, grep -E, grep -c
+sed -n '3p' 1.txt
+awk '$3 == "devops" {print $0}' 1.txt
+
+network interface >> physical (ethernet port), virtual (VLAN)
+
+open system interconnection 
+
+application layer  (allow the users to interact with the network as it coantains protocls http, https,SMTP/POP3,FTP,DNS     >> sender
+presentation layer (translate the data between application layer and network layer as we cannot send the data in plain text format encrypt and decyript)
+session layer   (establish, maintain and manages,termination the connection if data transfer requre it establish connection if not it discountune the connection)
+transport layer (complete data transfer, maganaging data segmentation, sequencing, reassabling) provides end to end communication (if too much traffic is coming then it will manage it,congestation,data flow,error handeling)
+                uses TCP protocol (sence the data but its not the fastet but complete is reached used in mail, but UDP is faster but we dont know complete data is transfered or not
+                UDP is used in gaming and streaming
+network layer (manages the routing of the data (process of selecting the path across the network from source node to destination node) handles the logical addressing)
+datalink layer (node to node data transfer directly transimiiting the data from one sevice to another service on the physical layer (data realibility no data wastage) using segmentation)
+physical layer (cable,switches and router >> trasmits the RAW bitstream via copper cable or fiber optics)         >> reciever
+
+IPV4 >> 8bits  >> 0-255, 255.255.255.255 >>11111111.11111111.11111111.11111111 >> 1 2 4 8 16 64 128 >> 255 >> 192.168.1.0 >> 
