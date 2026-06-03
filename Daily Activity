@@ -293,3 +293,65 @@ datalink layer (node to node data transfer directly transimiiting the data from 
 physical layer (cable,switches and router >> trasmits the RAW bitstream via copper cable or fiber optics)         >> reciever
 
 IPV4 >> 8bits  >> 0-255, 255.255.255.255 >>11111111.11111111.11111111.11111111 >> 1 2 4 8 16 64 128 >> 255 >> 192.168.1.0 >> 
+class A >> 1.0.0.0 to 126.255.255.255/8    >> 255.0.0.0
+class B >> 128.0.0.0 to 191.255.255.255/16 >> 255.255.0.0
+class C >> 192.0.0.0 to 223.255.255.255/24 >> 255.255.255.0
+
+network bits and host bits 
+network address and broadcast address
+0 to 255 - 2 
+loopback address 127.0.0.1
+
+CIDR >> classless interdomain routing 
+
+IP address, MAC address, routing, ARP (Address Resolution protocols : its maps the IP address with MAC address of the hardware so the packet can be send to correct device)
+DNS >> Domain Name System 
+
+ip addr show
+ifconfig
+netstat -tunlp
+ss -tunlp
+ping www.google.com
+telnet or traceroute (used to check the path taken by packet to reach from the host to destination)
+dig
+nslookup
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 22 -j DROP
+hostname 
+
+=================================================================================================================
+03-06-2026 
+
+DNS (converts IP address into name and viceversa )
+as human we cat rembeber ip address so we need DNS 
+Centralized system to resolve the ip address to the name it is like phoneook for ip address
+problems if we have single system for domain:
+SPOF >> single point of failure 
+too much of traffic: overload and scaling
+control and trust problem
+hosts, centralized,distributed
+distrubuted DNS system 
+
+hiericacal structure
+google.com
+DNS reads from right to left 
+
+TLD >> top level domain  ex:.com,.org,.net,.io   (its is like category or zone)
+.com has its own dns server and it is called as TLD nameservers they do not know the ip address of the domain  (managed by multiple servers)
+
+authrative Domain Servers (belongs to server owner like it saves the record of the domain it registered the domanin name)
+if we purchase domain from godaddy then data will be strored in godaddy authrative domain server. ip address to which domain is mapped is avialble here
+
+Root in DNS >> google.com. (. at the last or end of domain is root and the data is stored in root domain)
+
+google >> autherative DNS Server
+. >> Root DNS Server
+.com >> TLD Domain Server
+
+first root >> then TLD >> Autherative server >> autherative server gives the ip
+
+ dig +trace umedex.com
+
+
+
+
