@@ -351,7 +351,58 @@ google >> autherative DNS Server
 first root >> then TLD >> Autherative server >> autherative server gives the ip
 
  dig +trace umedex.com
+1.DNS is not centralized
+2.No Single server knows everything
+3.IP is know to the autherative server 
 
+problem faced :
+multiple network hops
+multiple DNS servers
+Latency : as it will take more time to resolve the IP.
+to resolve this we are going to use DNS caching 
+cahching means saving the result of the output so that it can be reused without doing the full work again. (cache is the temporery memory)
+Root >> TLD >> Autherative servers
+
+pageload and multiple DNS loopkups
+latency, load
+multiple server lookup to differenet servers
+
+caching may reduce the traffic, realibility, faster browsing
+
+caching done in browser (layerA)
+OS DMS caching (Layer2)
+Recursive DNS Resolver caching (layer 3)
+ISP , 8.8.8.8(google), 1.1.1.1(cloud flair) (examples of resursive DNS resolvers)
+
+how long the info is going to store in a cache 
+
+we canuse TTL >> time to live (no of seconds the DNS answer is allowed to cached before it is refreshed) like TTL=300secs 
+
+TTL is records 
+positive caching >> correct information 
+negative caching >> no domain is mapped NXDOMAIN
+
+based of the region we may get differenet ips 
+
+DNS remembers whats 
+DNS RECORDS 
+google.com >> it shows IP 
+DNS records are stored on autherative servers 
+
+A records is responsible for address ( IPV4 ) skpin.in   >> name to ip v4 pointing or mapping
+
+AAAA record if ipv6 needs to map with the domain then it need to store using AAAA record
+
+CNAME cannoical name record makes one name point to another >> name to name maping (used if we are going to use eks cluster then it provides us endpoint if we want to map it with
+load balancer then we need to map it using the domain)
+
+Mx record >> Mail exchanger record it accepts the mail for the servers 
+
+TxT record >> used for verification purpose only 
+
+NS >> name servers use to know the authoritative DNS servers 
+
+packets refers to the samll amount of data 
 
 
 
