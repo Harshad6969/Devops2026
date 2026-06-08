@@ -418,7 +418,149 @@ Network level MITM (Man in the Midlle attack)
 HTTPS >> HTTP + TLS (encriyption layer), TLS handshake 
 
 =======================================================================================================================
+04-06-2026 & 05-06-2026
 
+UFW >> uncomplictaed firewall (traffic control)
+
+virtual private cloud 
+
+security group is created over the network but we need to manage the security on the virtual machine using the iptables 
+
+UFW means setting the firewall on the OS level but they are complex command for this we will use wrapper called UFW
+
+default firewall is allow all 
+
+but custom firewall we can define policy (open the port of security group and deny it on UFW)
+
+security group, UFW, Iptables 
+
+iptables -A input -ptcp --dport 22 -j ACCEPT
+
+using UFW: sudo ufw allow 22 
+
+if you dont define if the traffic is incomming or outgoing then the ufw will always do it for incoming
+
+sudo uwf allow 80
+sudo uwf deny 80
+
+ufw allow 8080/tcp
+
+sudo ufw allow in 80/tcp
+sudo ufw allow out 80/tcp
+sudo ufw deny in 80/tcp
+sudo ufw deny out 80/tcp
+
+if we are enabling the ufw then the default policy is to disable the incoming and outgoing traffic 
+sudo ufw default deny incoming
+sudo ufw default deny outgoing 
+
+
+allow,reject,deny
+
+allow >>accept the traffic 
+
+deny >> you will get timeout error you will not get any special error 
+
+reject >> you will get emmediate error (unreachable)
+
+comments 
+
+  433  java -jar database_service_project-0.0.18.jar
+  434  sudo ufw status verbose
+  435  sudo ufw allow 22
+  436  sudo ufw allow in 22
+  437  sudo ufw status verbose
+  438  sudo ufw enable
+  439  sudo ufw status verbose
+  440  sudo ufw default deny incoming
+  441  sudo ufw default allow outgoing
+  442  sudo ufw status verbose
+  443  java -jar database_service_project-0.0.18.jar
+  444  sudo ufw allow 8080
+  445  sudo ufw status verbose
+  446  java -jar database_service_project-0.0.18.jar
+  447  cd ..]
+  448  cd ..
+  449  ufw allow 9000/tcp
+  450  sudo ufw allow 9000/tcp
+  451  sudo ufw status verbose
+  452  sudo ufw status verbose
+  453  sudo ufw allow 80/tcp comment 'opened for http traffic'
+  454  sudo ufw status verbose
+  455  sudo ufw allow 8080/https comment 'opened for https traffic'
+  456  sudo ufw status verbose
+  457  sudo ufw delete allow 9000/tcp
+  458  sudo ufw status verbose
+  459  sudo ufw allow proto tcp from 49.43.24.52 to any port 9000 comment 'access to the harshad pc is allowed'
+  460  sudo ufw status verbose
+  461  his
+  462  history
+  
+  
+OWASP Security check vurnability scanning failure due to port issue 
+
+telnet <ip_address> <port_no>
+ping
+nslookup 
+sudo lsof -i 8080
+du -sh, df-kh 
+
+permission deined >> for service or file and systems 
+
+if ubuntu user want to run the docker srervice then the ubuntu user should be added in docker group
+sudo usermod -aG docker $USER
+newgrp docker 
+
+namespace and cgroups 
+namespace : private the isolation for the process
+cgroup:manage and limit the amount of system resource thata group processcan consume 
+
+mnt namespace mount
+
+uts namespace 
+
+ipc namespace inter process communication isolation : allows process to send data, send messages, coordinate access
+in linux each process will have its own memory for sharing memory with differenet process then IPC is required
+
+IPC mechanism 
+shared memory 
+
+p1 and p2 are going to use same memory block fastest way to share the data 
+message queue p1 is going to share message and process p2 is goinhg to read it later
+semaphor : if process p1 is using something and process p2 want to use it then it will only use that thing if p1 stop accessing it so that correctioption of data can be preveneted
+ 
+without ipc differenet conatiner can see each other data and there can ib interferance
+
+ipcs >> shows ipc objects created
+ipcmk >> creates ipc objects 
+
+
+    1  apt update
+    2  apt install -y utils-linux
+    3  apt install -y util-linux
+    4  apt install -y sysvinit-utils
+    5  ipcs
+    6  ipcmk -M 1024
+    7  ipcs -m
+    8  history
+	
+user namespace : it differentiates the user ids in the base linux machine and conatiner it does UID translation
+
+cgroup 
+
+docker run -it --memory=512mb 
+
+cgroup namespace
+
+cg is police 
+cd namespace is curtain
+
+cat /sys/fs/cgroup/memory.current  >> command to see the memory used by the conatiner
+cat /sys/fs/cgroup/memory.max
+
+docker run --memory=512m ubuntu:latest bash -c "apt update && apy install -y stress && stress --vm 1 --vm-bytes 700M"
+
+=================================================================================================================================
 shell scripting 
 ./quote.sh
 #! /bin/bash
