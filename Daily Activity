@@ -417,5 +417,67 @@ Network level MITM (Man in the Midlle attack)
 
 HTTPS >> HTTP + TLS (encriyption layer), TLS handshake 
 
+=======================================================================================================================
+
+shell scripting 
+./quote.sh
+#! /bin/bash
+
+variable="hello world"
+echo "Double quotes: $variable"
+echo 'Singlequotes: $variable'
+echo No quotes: $vaiable
+echo "Both quotes: '$variable'"
+
+special_char="\$"
+echo "variable: $special_char"
+
+LOCAL variables and global variables 
+
+string or array are most famous topics in shell script 
+
+error handeling is done using 
+
+trapp for handeling the signals 
+======================================================================================================================
+shell script project 
+
+*  *  *  *  * 
+
+* >> minutes ( 0 to 59 )
+* >> hours ( 0 to 23 )
+* >> day of the month ( 1 to 31 )
+* >> year ( 1 to 12 )
+* >> days ( 0 to 6 )
+
+40  17  *  *  2
+
+
+ cat monitoring1.sh
+#! /bin/bash
+
+URL="https://umedex.com"
+
+LOG_DIR="$HOME/website_Health_Logs"
+
+mkdir -p "$LOG_DIR"
+
+TODAY=$(date +"%y-%m-%d")
+
+LOG_FILE="$LOG_DIR/health_log_$TODAY.log"
+
+response=$(curl -o /dev/null -s -A "Mozilla/5.0" -w "%{http_code} %{time_total}" "$URL")
+
+status_code=$(echo "$response" | awk '{ print $1 }' )
+
+response_time=$(echo "$response" | awk '{ print $2 }' )
+
+timestamp=$(date +"%y-%m-%d %H:%M:%S")
+
+echo "$timestamp | Status: $status_code | Response_Time: ${response_time}s"  >> "$LOG_FILE"
+ 
+
+
+
 
 
