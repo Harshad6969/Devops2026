@@ -404,5 +404,18 @@ NS >> name servers use to know the authoritative DNS servers
 
 packets refers to the samll amount of data 
 
+================================================================================================================
+04-06-2026
+IP,PORT,TCP
+
+TCP works on transport layer (if we dont use TCP then message going to loss), duplicate message can be sent (packets), sequence of packets can be changed 
+3 way handshake  >> syn, syn + ack, ack  client to server
+
+passive sniffing
+active response modification
+Network level MITM (Man in the Midlle attack)
+
+HTTPS >> HTTP + TLS (encriyption layer), TLS handshake 
+
 
 
