@@ -619,6 +619,27 @@ timestamp=$(date +"%y-%m-%d %H:%M:%S")
 echo "$timestamp | Status: $status_code | Response_Time: ${response_time}s"  >> "$LOG_FILE"
  
 
+=====================================================================================================================
+10-06-2026 | GitHub 
+
+1.no version history file >> rollback 
+2.editing (overwriting)  no centralizared system 
+3.No accountability >> cant describe who did the changes in file
+4.Single point of failure (no backup)
+5.No isolation 
+
+git >> free tool or opensource tool which helps us to manage the code track changes(who, when, what)
+distributed system (DVCS) >> local copy, tracked we can switch to previous version with help of rollback 
+rollback 
+
+gitrepo >> location where your source code will be residing 
+github, gitlab, bitbucket >> this are the platform which uses git as tool to manage the repos 
+branches >> source code (feature branch created from the main branches where changes are going to take place )
+
+local, staging, commit, push 
+
+vi (create and modify) >> git add . (blobs gets created contains the content of the file) SHA 1 40 char id is given to one blob
+>> git commit -m  "message" (snapshort gets created and tree directory strucure is ctreated) >> git push origin master (changes are psuhed)
 
 
 
