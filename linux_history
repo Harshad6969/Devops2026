@@ -191,3 +191,156 @@
   191  pa -a
   192  ps -a
   193  history
+
+
+github history for git rtealted commands
+
+
+ 1  cd D:\Setup\githubdemo
+    2  cd D
+    3  cd D
+    4  cd D:\Setup\githubdemo
+    5  cd /d/Setup/githubdemo
+    6  ls
+    7  mkdit repo1
+    8  mkdir repo1
+    9  cd repo1/
+   10  git clone https://github.com/Harshad6969/github_demo.git
+   11  ls
+   12  cd github_demo/
+   13  touch 1.txt
+   14  git status
+   15  git add 1.txt
+   16  git status
+   17  git commit -m "Added 1.txt for testing"
+   18  ls
+   19  git status
+   20  touch 2.txt
+   21  git add .
+   22  git commit -m "Added 2.txt for testing"
+   23  git push origin main
+   24  touch 3.txt
+   25  git add .
+   26  git commit -m "Added 3.txt for testing"
+   27  git push -u origin main
+   28  git branch
+   29  git branch -r
+   30  git branch -a
+   31  git branch develop
+   32  git checkout develop
+   33  ls
+   34  git switch main
+   35  git switch develop
+   36  git switch -c feature
+   37  ls
+   38  touch 4.txt
+   39  git add .
+   40  git commit -m "Added 4.txt for testing"
+   41  git push -u origin feature
+   42  git branch
+   43  git branch -r
+   44  git switch develop
+   45  git push -u origin develop
+   46  git switch feature
+   47  git diff develop feature
+   48  vi 4.txt
+   49  git add .
+   50  git commit -m "modified the 4.txt"
+   51  git push
+   52  git diff develop feature
+   53  vi 4.txt
+   54  git add .
+   55  git commit -m "modified & deleted the 4.txt"
+   56  git diff develop feature
+   57  vi 4.txt
+   58  git add .
+   59  git commit -m "deleted everything the 4.txt"
+   60  git push
+   61  git diff develop feature
+   62  ls
+   63  touch 5.txt
+   64  git add .
+   65  git commit -m "added 5.txt"
+   66  git diff
+   67  vi 5.txt
+   68  git diff
+   69  git log --oneline
+   70  git diff 68b3d0d 896ffa4
+   71  git switch main
+   72  git log --oneline
+   73  get branch dev
+   74  git branch dev
+   75  touch harshad.txt
+   76  git add .
+   77  giyt commit -m "added file harshad.txt"
+   78  git commit -m "added file harshad.txt"
+   79  touch jas.txt
+   80  git add .
+   81  git commit -m "added file jas.txt"
+   82  git push
+   83  git log --oneline
+   84  git switch dev
+   85  git log --oneline
+   86  touch f1.txt
+   87  git add .
+   88  git commit -m "added file f1.txt"
+   89  touch f2.txt
+   90  git add .
+   91  git commit -m "added file f2.txt"
+   92  git push -u origin dev
+   93  git log --oneline
+   94  git switch main
+   95  git log --oneline
+   96  git switch feature
+   97  git log --oneline
+   98  git switch main
+   99  git pull origin main
+  100  git merge feature
+  101  git log --oneline
+  102  git merge dev
+  103  git log --oneline
+  104  git branch rebase-ex
+  105
+  106  touch f3.txt
+  107  git add .
+  108  git commit -m "added f3.txt"
+  109  git add f4.txt
+  110  touch f4.txt
+  111  git add f4.txt
+  112  git commit -m "added f4.txt"
+  113  git push -u origin rebase-ex
+  114  git log --oneline
+  115  git switch main
+  116  git rebase rebase-ex
+  117  git log --oneline
+  118  vi stash-ex.txt
+  119  git status
+  120  ls
+  121  git stash -u
+  122  ls
+  123  vi after-stashing.txt
+  124  git add .
+  125  git commit -m "added after-stashing.txt"
+  126  git push
+  127  ls
+  128  git stash list
+  129  git stash pop
+  130  git add .
+  131  git stash save "message-1"
+  132  git stash list
+  133  touch stash-2.txt
+  134  git add .
+  135  git stash save "message-2"
+  136  touch stash-3.txt
+  137  git add .
+  138  git stash save "message-3"
+  139  ls
+  140  git stash list
+  141  git stash pop stash@{1}
+  142  git stash list
+  143  git stash pop
+  144  git stash list
+  145  ls
+  146  git stash pop
+  147  git stash list
+  148  history
