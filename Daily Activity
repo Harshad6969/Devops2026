@@ -641,6 +641,19 @@ local, staging, commit, push
 vi (create and modify) >> git add . (blobs gets created contains the content of the file) SHA 1 40 char id is given to one blob
 >> git commit -m  "message" (snapshort gets created and tree directory strucure is ctreated) >> git push origin master (changes are psuhed)
 
+track (git is aware of changes), stage (if file is added into staging), unstaged (if file is not added) , untrack (newly created file)
+
+git merge and git rebase 
+git merge is going to add the extra commit to the history as maintain what changes are done while git rebase is not going to add the extra commit in the history.
+
+git stash and git pop 
+git stash is used when you are working on any file and any emergency work came and you start working on another file now you want that previous file should not get deleted
+then you stash that file and create the another file.
+
+while pop is used to bring back the stashed file back again
+git stash -u >> for untrack files 
+
+git cherrypick 
 
 
 
