@@ -713,3 +713,43 @@ when we do changes in the contenet of the file in the same file into differenet 
 when file is deleted 
 when file is renamed
 
+==============================================================================
+12-06-2026
+
+Reverting the commits 
+git revert <commit_id>
+extra commit need to added to maintain the history 
+
+git reset
+workdir , staging area, commit, push 
+
+untracked >> staging >> commit >> push 
+get reset modes >> hard reset, mixed reset, soft reset
+
+reset will move the head of the branch, move the file which was added, modification will be done 
+git reset --hard HEAD~1 or commit id
+the latest file will be completly deleted  (if commit and mentioned file need to be deleted then we should use hard reset command)
+
+git reset --mixed <commit_id>
+if we run this then the file from the commit area to the working area along with that head also moves 
+
+soft reset is used to modify the commit message 
+you can also use git reset --soft like git squash 
+
+git errors 
+http post buffer error 
+if the file size of repo is between 50 to 100 mb (.txt, java, json)
+but organization have 500 to 1GB files so we will get http post buffer error
+to resolve this me need to set the buffer size in bytes 
+
+git repository gets corrcupted 
+git remote add origin <repo_url>
+git fetch origin
+
+we have 2 branches main and dev 
+
+gitignore is .gitignore 
+
+git add -f <file_name>   >> command use to add the file in repo which is added in .gitignore file 
+
+Demo 
