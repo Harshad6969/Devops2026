@@ -1,0 +1,32 @@
+14-06-2025
+
+java, dotnet, python, nodejs 
+how the application runs, project structure, entry point of application, dependencies- manupilation 
+local build, portable docker, Kubernetes 
+
+java project main folders >> src folder (top level directory actual folder of code entry point is also present here), pom.xml
+
+src folder there are two sub folders main(conatins entrypoint) and test folder  
+ssrc = main source code is present
+pom.xml = dependencies,plugins are mentioned which are needed in project
+poml.xml >> dependency, dependencymanagement, plugins 
+we use maven as build tool in java based application (mvn), 
+build >> src code + dependencies info = package (with the package we can run the application)
+jar or war files 
+jar >> java archive >> they are standalaone application non dependent
+war >> web archive >> they are dependent they need tomcat 
+when we run jar application tomcat server gets automatically setup
+
+maven lifecycle 
+default >> build & package application
+clean >> remove previuos build files
+site >> generate project documents 
+
+default >> validate, compile, test, package, verify, install, deploy
+mvn comple >> scan complete source code (checks syntax based errors)
+mvn test >> running unit test cases 
+mvn package >> performs compile + test + package (jar or  war if we need which one to genereate then it is defined in pom.xml <package section>)  
+when we run mvn package then it target folder gets created
+
+ports needed to open >> 3000-9000, 443, 80, 22
+
