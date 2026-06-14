@@ -753,3 +753,54 @@ gitignore is .gitignore
 git add -f <file_name>   >> command use to add the file in repo which is added in .gitignore file 
 
 Demo 
+
+==============================================================================================================================
+13-06-2026
+
+Dev (DEVELOPMENT) application is build
+>> QA (STAGING) testing is done
+>> PPD (PRE PRODUCTION) application deployed to see how application behvaes foe  specific end users 
+>> PROD (MAIN) producation ready code is deployed for all end users 
+>> DR created for ready to deploy code as production may go down (DISASTER RECOVERY)
+
+in development stage the feature branch is created and local running of application is done on docker and if its working then code is mergerd to dev branch 
+then code is mergered to QA branch security sacn is done here and cheked if there are any bugs are there if yes bug fix branch is created and bugs are fixed and merged back to
+QA then QA branch is mergered to PRe prod branch after end to end testing then the code is taken to prod and dr environment
+
+same above mentioned environment are created but the docker file created is the final one for all environemnt so that docker image is completely tested and bug fixed
+the same docker iamge can be used to deploy in the production.
+
+only two environment are present QA and PROD branches are created in the QA environment tested and fixed if everything going good then code is mergered to the prod environment
+and done if any new feature comes then new branch is created in the QA and tested then same branch is merged in prod environment 
+
+.gitignore >> hidden file (*.env, *.log, build/, notes.txt)
+
+when we are building the nodejs based projects the node modules get created which are dependencies so we dont need to take it into remote repository
+keep repository as small as possible (no media file (mp3 & videos), dont save any sensetive information, log files, directory which is not required for deployment)
+if we added the file in .gitignore then the content or files or directories will be avialble on the local repo but it will not be avialble on remote repo.
+
+pull request workflow
+Develop >> feature branch is created to merge this we  need to first validate & verify the code (architecture or lead) they are called reviwers 
+in reality the merge is done using UI for that pull request 
+
+github organization and workflow
+
+we are going to use organization to set up repos 
+
+RBAC 30 employees >> 20 developoers, 5 reviewers, 5 devops engineer 
+
+admin, triage, write, maintain, read
+creating 3 groups developer, reviewer, devops, reader
+develoeper >>> write (push code create branches)  >> addd developers user in developer group
+reviwers >>> triage (read + manage issues) >> add  reviers users in reviwrrs group
+devops >>> admin >> add devops engineer user in devops group
+reader >>> read >> add new users in readre group
+specific repo or all the repos 
+
+there is standrd rule that once the branch is mereged then the feature branch should be deleted as work is completed
+organization with unique name is created >> base permission (read) >> Teams creation  admin (all repos) 
+
+branch protection rules >>
+
+git flow >> is called branching statergy introdued by vincent drissen it defines how branches are going to be created in the project
+
