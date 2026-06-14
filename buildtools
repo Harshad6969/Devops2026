@@ -30,3 +30,16 @@ when we run mvn package then it target folder gets created
 
 ports needed to open >> 3000-9000, 443, 80, 22
 
+when we run mvn compile it should be run in the directory where pom.xml is present
+when we run mvn compile mvn run for the fist time it pulls the dependencies from maven repository but when we run second time it will note take time as it will save the
+dependencis in .m2 folder.
+when we run mvn complie it downloads the dependencies for compile only when we run mvn test then it will download the dependencies for running the test cases.
+mvn package runs the comiple, test, and generate the package 
+by default tomcat runs on 8080 
+java -jar <package name preseent under target folder>
+default lifecycle >> mvn clean
+when we run the mvn install the .jar build package gets stored in .m2 folder rather than target folder
+when we run the docker deploy then it stores the build package into third party tools like nexsus
+
+<distributionManagement> >> in this part at pom.xml the nexus related url is stored here 
+default lifecycle >> compile, test, package, install, deploy 
