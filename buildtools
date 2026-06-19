@@ -43,3 +43,10 @@ when we run the docker deploy then it stores the build package into third party 
 
 <distributionManagement> >> in this part at pom.xml the nexus related url is stored here 
 default lifecycle >> compile, test, package, install, deploy 
+
+SQL >> with Java, DOTNET, Python, Nodejs
+
+mysql: 3306
+mongodb: 27017
+postgress: 5432
+
