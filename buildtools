@@ -44,6 +44,83 @@ when we run the docker deploy then it stores the build package into third party 
 <distributionManagement> >> in this part at pom.xml the nexus related url is stored here 
 default lifecycle >> compile, test, package, install, deploy 
 
+====================================================================================================================
+20-06-2026 
+
+JDBC >> java database connectivity
+PBM (process based model) >> C10K >> if  10 thousnad requests are comminh then 10 thousnads process gets created
+Thread Based >> process >> T1 T2 T3
+Nginx >> static side, Reverse Proxy, Load Balancer 
+webserver is software or hardware  
+to resolve the PBM Thread Based the nginx server where designed 
+nginx : event driven(when request comes then only process get crteated) and asyncrosized (dont sit ideal do something)
+nginx is going to use process not thread 
+if there are 4 core then 4 process get created 
+os assigns the connection to the socket 
+adding and registering it request to the EPOLL
+epoll is the notification mechnaism in linux that allows multiple programs to manage multiple system calls
+establish connection, get request 
+checking status of the sockets >> (connection readable, writable)
+read request and processing of the request can be done only if it ha sright to read git index.html, process index.html
+send respond 
+lifecycle of the connnection (close keeping alive if alive then it will go into epoll)
+Browser(clinet) >> TCP connection >> server
+connection which we recieved over the browesr is going to register with epoll and epoll will monitor it and os is going to assign that connection to 
+the socket if connection become readble then the request will be read by nginx and request will be processed and then nginx is going to respond back
+if the connection goes into writable mode 
+1. can be used to serve static webpages or websites 
+dir /var/www
+client >> nginx >> static webpages 
+2. can be used as reversed proxy 
+clinet >> nginx >> frontend and backend (if fronted is not able to connect to the backend then nginx will manage the requets as frontend will access
+backend using the nginx as mediator)
+3. can be used for load balancing 
+clinet 
+/etc/nginx >> configuartion filesystems
+/var/www >> webpages should be kept here 
+www_data  is the user name this users should have access to the folder /var/www
+we need to create the configuration with extension .conf and save it in /etc/nginx/sites-available/dev.conf
+enabling the configuration sites-enabled 
+tomcat 
+java and maven are mandetory for tomcat for running jar file along with that always install the tomcat in /opt directory
+tar -xvf <package_name>
+cd /opt/apache-tomcat-9.0.65/conf
+ls 
+setup tomcat user # sudo vi tomcat-users.xml
+<user username="admin" password="admin1234" roles="admin-gui, manager-gui, manager-script"/>
+sudo ln -s /opt/apache-tomcat-9/bin/startup.sh /usr/bin/startTomcat
+sudo ln -s /opt/apache-tomcat-9/bin/shutdown.sh /usr/bin/stopTomcat
+
+comment particular line: so that access to tomcat so that access to tomcat can be done from all ip address on internet 
+
+mvn package 
+
+conf & webapps folders are important in tomcat 
+
+#sudo cp target/hello-world.war /opt/apache-tomcat-9.0.65/webapps >> this command copies the war file from target directory to webapps folder
+
+context path is defined in src folder web.xml file 
+
+three tier application demo 
+
+frontend >> backend api >> database
+
+frontend >> javascript, React.js(library), Runtime env >> browser  (code will call the library)
+
+backend >> javascript, framework(express.js), node.js (runtime env) it takes care that code gets execuited in serverside (not visible on browser)
+framework is going to call the code 
+
+we dont connect frontend with database as it is connected from backend to database
+
+database we are going to use MYSQL
+
+CRUD 
+
+create 
+Read
+Update 
+Delete
+
 SQL >> with Java, DOTNET, Python, Nodejs
 
 mysql: 3306
