@@ -1,0 +1,92 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@1571.1580.v18e46842c125">
+  <actions>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@2.2291.v2934911987b_6"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@2.2291.v2934911987b_6">
+      <jobProperties/>
+      <triggers/>
+      <parameters>
+        <string>BRANCH_NAME</string>
+      </parameters>
+      <options/>
+    </org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction>
+  </actions>
+  <description>just for testing purpose</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>3</daysToKeep>
+        <numToKeep>3</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+        <removeLastBuild>false</removeLastBuild>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>BRANCH_NAME</name>
+          <description>Git branch to build</description>
+          <defaultValue>main</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@4331.v9d06ed4658ff">
+    <script>pipeline {
+    agent any
+    tools {
+        maven &apos;maven9&apos;
+        jdk &apos;jdk17&apos;
+    }
+    parameters {
+        // FIXED: Changed &apos;defaultvalue&apos; to &apos;defaultValue&apos;
+        string(name: &apos;BRANCH_NAME&apos;, defaultValue: &apos;main&apos;, description: &apos;Git branch to build&apos;)
+    }
+    stages {
+        stage(&apos;Git Checkout&apos;) {
+            steps {
+                // FIXED: Changed single quotes to double quotes and fixed parameter syntax
+                git branch: &quot;${params.BRANCH_NAME}&quot;, url: &apos;https://github.com/jaiswaladi246/Boardgame.git&apos;
+            }
+        }
+        
+        stage(&apos;Compile&apos;) {
+            steps {
+               sh &quot;mvn compile&quot;
+            }
+        }
+        
+        stage(&apos;Test&apos;) {
+            steps {
+                 sh &quot;mvn test&quot;
+            }
+        }
+        
+        stage(&apos;Build&apos;) {
+            steps {
+                 sh &quot;mvn package&quot;
+            }
+        }
+    }
+  post {
+      success {
+          echo &quot;correct pipeline is success&quot;
+      }
+      failure {
+          echo &quot;failure pipleline is failed&quot;
+      }
+      always {
+          echo &quot;Job complated at: ${new Date()}&quot;
+      }
+  }
+    
+}
+</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
