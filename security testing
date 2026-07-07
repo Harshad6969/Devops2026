@@ -4,3 +4,8 @@ SAST >> Static Application Security Testing  >> ststic code >> Sonarqube (scans 
 
 Sonarqube checks the quality, code coverage, compliance of the code 
 bugs, vulnerablities, codesmell >> when this things are less in source code then its qulaity is good
+
+compiance of code or quality gate checks (we define the conditionif no of bugs is more than 1 then code is not in compliance) we can define the no codesmell
+
+code coverege >> test cases are written to test the code  if we have 200 lines of code and testing team has written the 20 lines of unit test cases if 20 test cases covers the 
+180 lines then the code coverege is 90 percentage
