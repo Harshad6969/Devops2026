@@ -1,0 +1,6 @@
+DAST >> Dynamic Application Security Testing  >> running application  >> OWASP ZAP
+
+SAST >> Static Application Security Testing  >> ststic code >> Sonarqube (scans application source code from repo)
+
+Sonarqube checks the quality, code coverage, compliance of the code 
+bugs, vulnerablities, codesmell >> when this things are less in source code then its qulaity is good
