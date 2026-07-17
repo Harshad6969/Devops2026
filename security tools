@@ -1,0 +1,8 @@
+security means >> following best practices & left shift security (finding the issue as early as possible)
+
+pre-commit
+chmod +x pre-commit
+
+tokens, password, api key 
+
+git leaks (if we use this no need to define conditions it automatically detects the sensitive data)
