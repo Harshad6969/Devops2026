@@ -46,7 +46,7 @@ trivy fs --skip-dirs node_modules .
 trivy image nginx
 trivy image --format table -o image-report.html nginx:latest
 ==============================================================
-source code for logic we used sonarqube which is also called software as 
+source code for logic we used sonarqube which is also called for SAST (static application security testing)
 SBOM >> software build of materials (used for  creating document about all the ingredeiants, dependencies, tools used in our project)
 one dependencies may have sub dependencies 
 
