@@ -1,8 +1,87 @@
 security means >> following best practices & left shift security (finding the issue as early as possible)
 
-pre-commit
+pre-commit  >> in .git folder go inside hooks folder create file with name pre-commits  >> and then we paste the content like which wording should not b=be present in the
+source code so that it cannot be commited 
 chmod +x pre-commit
 
 tokens, password, api key 
 
 git leaks (if we use this no need to define conditions it automatically detects the sensitive data)
+
+insatll git leak >> gitleaks delect >> gitleaks detect --no-git(its not going to go through complete git history)
+gitleaks detect --no-git --report-path report.json  >> this commands scans the source code and saves the gitleak report in report.json format 
+gitleaks detect --no-git --exit-code 1
+gitleaks detect --source. -r b.txt
+gitleaks detect --source. -r b.txt --redact
+gitleaks detect --source. --path config.yaml
+gitleaks detect --source. --exit-code 0
+gitleaks detect --source . --verbose
+gitleaks detect --source. -f json -r report.json
+
+======================================================================
+dependency scan >> in all below mwntioned files dependency details are present >> this checks the version of the dependency and is the mentioned version still safe to use
+or is it defective its tells the version which we are currently using and version which not safe to use and tells us about version in which issue is fixed
+
+dependency scans uses the databases >> NVD (national vulnerability database), Linux dependency data base, Redhat dependency database 
+
+dependency scan tools >> Trivy, OWASP dependency check (only used in java based project, does not uses many databases)
+it gets the list of dependency mentioned in pom.xml then it connects to the database  >> CVE_YEAR_SPECIFIC NUMBER  >> TRIVY is suitable for all kinds of language 
+java >> pom.xml
+nodejs >> package.json 
+python >> requiremnt.txt
+dotnet >> xyz.csproj
+
+========================
+trivy commands 
+
+trivy fs >> file system scan
+trivy fs .
+trivy fs --scanner secret .
+trivy fs --scanner config .
+trivy fs --scanner vuln,secret,config .
+trivy fs --severity HIGH,CRITICAL .
+trivy fs --format table -o report.html .
+trivy fs --skip-files README.md .
+trivy fs --skip-dirs node_modules .
+trivy image nginx
+trivy image --format table -o image-report.html nginx:latest
+==============================================================
+source code for logic we used sonarqube which is also called software as 
+SBOM >> software build of materials (used for  creating document about all the ingredeiants, dependencies, tools used in our project)
+one dependencies may have sub dependencies 
+
+================================================================================
+kubernetes policy enforcing 
+hardening >> i am  writing a yml mainfest file that we should follow the best practices  while writing it like defiining ram,cpu, probes, credentials should not be hardcoded
+in that files.
+RBAC >> role based access control >> we deploy application in pod so pods are communiting with each other as they require volume so we need to look that they sholud not give
+rootv level access >> service account and admin credentials, common users (deployment,modify)
+in RBAC we create the service account and give it persmission also attach the resources (minimal priviliges)
+
+===============================================================================
+IAC scan 
+
+there could be issue in the terrform config files like keeping resource public for this we use tools like checov they are issues or misconfiguration
+checkov can be used for >> kubernetes, docker, secrets, ansible 
+checkov -d .  >> used to scan current directory
+CWK_AWS_130 >>  checkov rules
+checkov -d . --download-external-modules true 
+chexkov -d . --framework terraform
+checkov -f main.tf
+checkov -d . --frameowrk kubernetes
+checkov -d . --check HIGH,CRITICAL 
+checkov -d . -o json
+==================================================================================
+vault  
+previously we were using secrtes file for creds which were encrypted in base 64 format and then we were storing it in secrets file but any one can decrypt it 
+as its only base 64 encrypted
+to resolve tis we will save the creds in hashicrop vault at time of deployment the kubernetes will call hashi crop vault for creds
+secret manager, key vault 
+===================================================================================
+DAST >> dynamic application security testing 
+OWASP ZAP >> used to find out if the running application can be hacked or attacked from the outside 
+MITM (MAN IN THE MIDDEL) >> OWASP ZAP 
+
+PC >> OWASP ZAP >> K8s application server 
+it can directly attack the application over the network >> performs the attacks on the websites 
+OWASPS ZAP have top 10 >> its list where its have top 10 most common yet very powersful misconfiguration or issues which may be avialble in your code 
