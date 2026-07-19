@@ -85,3 +85,12 @@ MITM (MAN IN THE MIDDEL) >> OWASP ZAP
 PC >> OWASP ZAP >> K8s application server 
 it can directly attack the application over the network >> performs the attacks on the websites 
 OWASPS ZAP have top 10 >> its list where its have top 10 most common yet very powersful misconfiguration or issues which may be avialble in your code 
+=================================================================================
+prowler >> cloud platfrom security tool
+
+security best practices, audits, inicdent response, continuous monitoring , hardening, forenscis readiness
+
+dockle >> used to build best practices for docker image, build secure docker images 
+dockle sonarqube:lts-community
+
+dockle -f json -o results.json
