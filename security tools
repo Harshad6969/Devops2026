@@ -223,3 +223,84 @@ scanning >. passive scaning and active scaning
 
 passive >> analysis of traffic which is genereted by others
 active >> in this case ZAP it self sends the traffic it attack the website in different ways
+=========================================================================================================================================
+
+1. Trivy (Dependency Check, AquaSec)
+Trivy scans container images, file systems, git repositories, dependency and libraries, and Kubernetes clusters.
+Key Capabilities
+Detects major vulnerabilities inside the base image.
+Downloads OS and language packages.
+Common Vulnerabilities and Exposures (CVEs):
+CVE-2023-12345 (Example) -> Brand new vulnerability found in the image.
+Misconfigurations in K8s
+Security Risk: Risks in the file system.
+Sensitive data in fs: Storing sensitive data in the package manager.
+Package Manager Vulnerabilities: (Dependency Vuln)
+Trivy Commands
+Repository Scanning
+bash
+# Basic repository scan
+trivy repo <github_repo_URL>
+
+# Scan repository and format output as a table report
+trivy repo --format table -o report.txt <repo_url>
+
+# Read repository targets from a text file
+cat repo.txt
+git clone <repo_url>
+trivy fs
+Use code with caution.
+
+File System Scanning
+bash
+# Scan file system and output JSON report
+trivy fs --format json -o report.json
+
+# Scan file system and output table text report
+trivy fs --format table -o report.txt
+Use code with caution.
+
+Supported Output Formats
+table
+json
+template
+sarif
+cyclonedx
+spdx
+github
+cosign-vuln
+spdx-json
+Image Scanning
+bash
+# Basic image scan
+trivy image <image_name>
+
+# Scan image and output SonarQube JSON format (custom community tag)
+trivy image --format json -o image.json sonarqube
+Use code with caution.
+
+Note: There is no plugin for Jenkins, so we need to download the trivy on the runner where Jenkins is hosted.
+Jenkins Pipeline Integration
+groovy
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // Keep name as lowercase
+                git branch: 'main', url: 'https://github.com'
+            }
+        }
+        stage('Trivy FS Scan') {
+            steps {
+                sh "trivy fs --format json -o trivy-report.json ."
+            }
+        }
+    }
+}
+Use code with caution.
+
+Local Trivy on Jenkins Commands
+bash
+# Scan file system and generate a comprehensive JSON report (covering vulnerabilities)
+trivy fs --format json -o trivy-report.json --vuln-type (os,library) --scanners vuln,misconfig --severity HIGH,CRITICAL.
