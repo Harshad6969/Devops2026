@@ -116,3 +116,110 @@ for syft and grype >> dependencies sholud be installed earlier
 trivy fs . --format cyclonedx --output trivy-enriched-sbom.json
 trivy sbom trivy-enriched-sbom.json --format table
 trivy fs . --scanners vuln,license,secret
+========================================================================
+
+OWASP top 10 >> 2021  now latest is 2025
+means, why, tech,affect, how to secure
+
+broken access token  >> authentication and autherization (happens becouse developer checks login but forgets to give permission, backend trust traffic frontend,no ownership check in API
+role checks and RBAC  what ever request user is sending it is valid 
+
+in AWS iam role id created and full permission is gien to the user, s3 bucket is public, pods using the cluster admin role 
+how it affects >> data leaks, account takens, compliance 
+prevent >> authorization checks on backends, verification to user id, roles, ownership, RBAC, never trust frontend traffics
+
+cryptographic failures >> senstivie data like api keys, crfeds, token are easyly readable saved in plain tgext, not using https, hardcoing the keys
+
+username can be saved in plain text but the password should be encrypted, in cloud project realtyed secrtets openly stored in github, no encryption on volumes, 
+affects >> password reuse, creds stuffing, data thef, leagel fines
+
+use https always using gateway API, encryption, use hashicrop valuts, rotate secrets regularaly.
+
+injections  >> verifying the inputs given by users to the code, running users inputs as command 
+
+SELECT * FTOM users WHERE username = '$input'; >> what kind of users should added should be defined (code should be written to verify the input)
+data liks, authentication, data delection, remote code execution 
+preventation >> verification should of proper format, least privileges, data must be data 
+
+insecure design >> design of application is not good 
+cloud >> no rate limliting on APIs, no quota on SAAS, No protection againats abuse
+finanicaial fraud, infra cost, ligal consiuses
+security reviews, limits everywhere
+
+security misconfiguration >> spplication running on defaults security nothing is hack but any one can hack it as its open to use
+keeping port range open,debug mode on all logs can be easily avilable, keeping enverionment varibales in source code
+
+debug is true, stack traces are exposed, env variables are leaked, internal path 
+admin panel of application is accessible to everyone 
+public s3 bucket, k8s dashboard is exopsed, prometeheus and grafana re kept open, security group is allowed anywhere from intetnet
+
+sensetive data,  easy entry poinyt for attackers,
+
+disbale debugs close unused ports, continuos security scanning, DAST : OWASP zap
+vulnerable and outdated componenets >> libraries and dependencies are outdataed are vulnerable are used in our application 
+dependencies, libraries never got updated, vulnerablites scanning not done, 
+
+log4j vulnerability >> use SBOM list of all dependencies, libarabies, docker images are used
+full server compramise, data theft, mass exploilation  >> regular 
+SBOM, Trviy, Synk
+
+identification and authantication failures >> system not verifyring the login, seesion time, weaak passsword, no MFA
+min length
+AWS no MFA, shared credentials, hardcoding the api keys
+account takeover, unauthorize action, token rotation, limiting the login attempts,
+authentication failures leads to account take over.
+
+software and data integrity failures  >> blindly trusts the code never verify its  building application with jar system assumes that the code is safe 
+build app jar >> docker >> deployment k8s if somne one replaced the jar file and they put the malious jar file then it will be blunder
+checksum  and signature 
+massive ammount of issue 
+sign all arifacts and imagesverify checksum 
+restrict who can modify >> this can reduce the software and data integrity failure 
+
+giving the fingerprint vaildation to the jar file or docker images 
+signing the docker image or jar 
+
+
+security logging and monitoring failures >> if we cont have monitoring then there will be no alterts and monitoring like attack happening 
+attacker can try thousnad passwords we should get the alerts once any thing wrong is happening 
+root access to the account
+intergate the monitoring tool keep log authentication, centralized loggig, alerts on anything suspesious happens
+
+
+server side request forgery (SSFR)  >> attackers mades the server yo attack on there behalf cannot be reached from the outside 
+sending the url as the part of the application 
+
+AWS >> 169.254.169.254 >> SERVER (where peace of code is written) >> in this case appliaction itself runs the culprit url and saves the output in itself
+theft of cred, account access gain, infra taken over, 
+valiadte the url, block internal ip ranges, disvbale the metadata access, block network level projections 
+
+WebGoat, burbsuite(this is the tool which helps to get access to webrequest which can be modified leter on), firefox 
+
+highjack cookie >>> some number will be missing and create the dummy conetent and paste it there >> trying the generate the particulsr attacks >> and start attacking 
+
+owasp Zap >> DAST & SAST 
+
+dynamic application security testing >code has been deployed and application is running
+
+OWASP ZAP : becomes attacker, after deployment also we have do the security checks 
+requests and responses are there 
+browser   >>  ZAP >> Application 
+
+ZAP >> can record traffic, analyise, replay, modify, attack our website also >> we are going to do this into staging environment then we can relese the application
+
+it can act as intercepting proxy >> MAN IN THE MIDDLE
+
+FULL URL + query parameter, Headers(auth+cookies+content-type), body, response headers, cookies, tokens, status codes and error messages
+
+200, 503, 404  >> zzap will act as cctv camera wathcing over everything 2
+
+setup site tree + history >> prepare the tree (where you went it will  create the tree) history (request + response are captured by zap) and data avilable for analysis
+
+crawling similar to snake >> explore the webpages by itself >> traditional spider crawling & AJAX spider
+traditional >> zap reads the html pages, forms,links but it can clik the website or modify it can only read  its good for basic websites
+AJAZ spider >> can click buttons, integrate the java code, execute the code, new endpoints discover but its going to be slow >> can be used for the complex website 
+
+scanning >. passive scaning and active scaning
+
+passive >> analysis of traffic which is genereted by others
+active >> in this case ZAP it self sends the traffic it attack the website in different ways
