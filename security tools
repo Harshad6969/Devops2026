@@ -94,3 +94,25 @@ dockle >> used to build best practices for docker image, build secure docker ima
 dockle sonarqube:lts-community
 
 dockle -f json -o results.json
+==================================================================================
+
+SBOM >> software build of materials (conatins list of software components, librarberes, dependencies) that are utilized in the project 
+generate the SBOM file, c=scan vulnerabilities, attesting the files (signing the files digitally), verifying cosign
+list which contents the software compononents (name, version,license, source), dependencies, libraries
+should be created in the specific format scanning the SBOM file
+store the SBOM file on any of the location
+before sharing the file with clienty we should sign it.
+
+report for SBOM
+cyclone DX >>cyclone dependency exchange focues on security created by OWASP  >> CLI tool is used 
+SPDX >> software package data exchange developed by linux foundation focues on licenses and metadata  >> managed by compliance team
+
+Trivy can generate the SBOM report and can scan the report >> used when quick scan is required
+syft >> generate the SBOM report
+grype>> scans the SBOM report 
+cosign >> used for testing & verifying the SBOM report
+for syft and grype >> dependencies sholud be installed earlier
+
+trivy fs . --format cyclonedx --output trivy-enriched-sbom.json
+trivy sbom trivy-enriched-sbom.json --format table
+trivy fs . --scanners vuln,license,secret
