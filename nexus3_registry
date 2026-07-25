@@ -1,0 +1,67 @@
+Nexusu 3 Artifact manager >> used to store the build and the docker images in the remote repo. nexusus run on port 8081 and docker registry port 8082
+
+types: hosted, group, proxy
+
+hosted >. snapshort repo and production or release repo
+proxy & group
+
+there are two types of registry public and private  >> docker, Azure container registry, Elastic container registry, Nexsus
+
+nexsus need minimum 4gb of storage avialable min otherwise it will crash so we need to check the logs and ststus of nexsus
+
+keep cleaning nexsus for unnecessary files other wise with in the month it will get fill
+
+keep the policy that if artifact is 90 days old then it will get automitacally delete
+
+maven releses >> artifacts created for the higher environment
+maven snapshort >> artifacts created for lower environment
+
+we require nexsus repo url 
+credes >> username password    >> this three things are require to publish arifacts to nexsus
+
+
+ <distributionManagement>
+        <repository>
+            <id>maven-releases</id>
+            <url></url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-snapshots</id>
+            <url>http://43.205.231.196:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>                                         >> we need to update the url for the for nexsus in the url path
+	
+	
+url can be visible to any one but credentials should be hide in such a way that it should not be seen by onyone in pipeline 
+
+<groupId>com.javaproject</groupId>
+	<artifactId>database_service_project</artifactId>
+	<version>0.0.18</version>
+	<name>database_service_project</name>
+	<description>Project for Spring Boot</description>
+	<packaging>jar</packaging>
+	<properties>                                                    >> we need to do changes in the version for uploading in snapshot and relese remote nexus repo
+	
+	
+along with that we need to save the scretes in the github >> settings >> secret and variables and action
+
+DOCKER IMAGES ARE THE FINAL VERSION OF THE ARTIFACTS 
+
+CI : clone >>test caeses >>security checks >>build the application artifacts >> building docker image >> using the same image in k8s manifest file >> deploy to k8s
+
+setting up docker repo of type hosted on port 8082 without SSL 
+
+sudo vi /etc/docker/daemon.json
+add insecure registies with server ip and port no 
+
+restrat docker
+
+now you can push the image in http based docker private registy created on nexus also add Docker bearer token realmin security and realms path and save 
+
+in public registry like docker you have to give username/imagename:version
+docker login ipaddress:port
+docker pull nginx 
+in private registy you have to name it like : registurl/imagename:version
+docker tag nginx:latest <ipaddress>:<portno>/nginx:latest >> command used to rename the docker image 
+docker images 
+docker push  <ipaddress>:<portno>/nginx:latest
