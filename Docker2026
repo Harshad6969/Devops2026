@@ -43,3 +43,57 @@ ENTRYPONT: defines the mainexecutable for the conatiner
 EXPOSE: documents the port information
 ENV: sets the environemnt variable (it can be seen during the whole process even when conatiner is running)
 ARG: used during the build time    (means you can only set it or see it while building image)
+
+
+entrypoint defines the main process
+
+docker build -t entrypoint-demo -f dockerfile-entrypoint .
+
+
+
+cmd : override
+
+entrypoint:appending
+
+docker run --entrypoint date ent-demo:latest >> >> command use to override the entrypoint
+docker run --rm --entrypoint date ent-demo:latest  >> rm removes the conatiner once it is stopped 
+
+if we are using the multiple entrypoint in the dockerfile then it is going to use the last entrypoint   
+
+when we are going to use cmd and entrypoint in the single dockerfile 
+
+FROM apline
+ENTRYPOINT ["echo"]
+CMD ["Hello from CMD"]
+
+docker build -t ent-cmd -f Dockerfile-mix .
+docker images 
+docker rmi <docker_image>
+docker run <image-name> date 
+
+cmd must be used when vaules are going to change >> if we need to run differenet commands 
+ Entrypoint must be used when me want to do the changes but they are going to be arguments (updating or adding new values)
+ 
+ARG & ENV
+
+ARG scope build time , value of arg not avilable in conteiner, used in build configuration 
+env scope is at build time and run time, value of env is avialble in continer
+
+FROM node:20-alpine
+ARG BUILD_VERSION=1.0
+ENV APP_ENV=production
+RUN echO "Build version:$BUILD_VERSION"
+CMD ["sh","-c","echo Runtime environment: $APP_ENV"]
+
+DOCKER EXEC -IT <CONATINER_NAME> /bin/bash
+echo $BUILS_VERSION
+echo $APP_ENV
+
+docker ps
+docker ps -a
+docker conatiner prune >> removes all stopped conatiner
+docker images
+docker image prune >> removes all unused conatiner
+docker images prune -a
+dangling images are reoved using docker image prune
+dangling images are the untagged images 
