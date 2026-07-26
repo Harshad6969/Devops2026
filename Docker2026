@@ -1,0 +1,45 @@
+Docker : resolved the problem for portebaility like port tools version dependency, commands, jar file required so that the build file can run on any platform
+its platform for packaging the applications and their dependencies into lightweight, portable units called as conatiners.container runs the application in isolated environment, its
+shares the host of OS kernal so it makes conatiner run faster, efficient and ideal for modern application delivery
+
+Docker client  >> its CLI for running docker commands its helps to communicate with docker
+Docker Deamon  >> its background process its runs OR MANAGED the commands which are written in docker CLI 
+Docker Engine  >> its environment which conatins the CLI and DEAMON process
+DOCKERFILE  >> its conatins scripts which includes env required, package name, dependencies, port and commands require to run the application(blueprint)
+Docker IMAGES  >> image is the actual package which is created from thr docker file you can share this file.
+CONTAINERS  >> isolated environment where you apploication is running 
+registries  >> it is place where the docker images are stored like differenet versions of applications are saved here.
+volumes
+networks
+
+
+docker repos and docker regisry are two different things >> repo refers to the image while rehisry is place where repos are stored repos are generally the multiple versiosns of
+application
+Docker >> Dockerfile >> DockerImage >> conatiner
+Docker hub is registry but harshadbhargude is the repository 
+
+structure of docker file 
+Boardgame requirements >> mvn, java 17, jar file, 8080 port, java -jar xyz.jar
+
+FROM >> providing the baseimage maven:3.8.5-openjdk-17
+
+basei image should be small in size it should have all the tools reinatlled which we require to run our application
+
+WORKDIR >> required to point where our jar file will be present /app
+
+to get jar file we can run from pipleline like maven package or we can mention in dockerfile bout maven package 
+
+EXPOSE >> documenting the port details 8080
+
+CMD or ENTRYPOINT >> used to run the commands inside the conatiner ["java","-jar","xyz.jar"]
+
+FROM : defines the base image should be samll in size if not the final docker image will be big in size
+WORKDIR: specfic directory should be mnetioned where you want to same the things like pacjages
+COPY: used to copy files from the host machie to docker image
+ADD: it performs the copy command task but it also downloads the depenedencies or packages from URL 
+RUN: used to run specific commands in docker image (in conatiner we bydefault run with root user)
+CMD: defualt command executes if no argument is not given or when conatiner starts
+ENTRYPONT: defines the mainexecutable for the conatiner
+EXPOSE: documents the port information
+ENV: sets the environemnt variable (it can be seen during the whole process even when conatiner is running)
+ARG: used during the build time    (means you can only set it or see it while building image)
