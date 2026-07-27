@@ -97,3 +97,79 @@ docker image prune >> removes all unused conatiner
 docker images prune -a
 dangling images are reoved using docker image prune
 dangling images are the untagged images 
+
+layers in docker file
+FROM
+WORKDIR
+RUN
+COPY
+each line is layer in docker and each layer is going to be cached if anything is not changed in the dockerfile then it is going to
+take the previous one as caching which makes the build process fast
+
+in nodejs >> package.json and package-lock.json this are responsible for downloading the dependencies
+
+node-18-slim >> very small in size
+
+FROM node:18-slim
+WORKDIR /app
+COPY package*.json./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["node","server.mjs"]
+
+downloading dependencies creates very hughe file so we copy the dependencies first
+
+SRC >> code, packages there are two files
+changes are going to be done In code file while there will be no change in package files
+process of downloading dependencies takes very large time at first time so run it after that we can use that layer further also
+we can use that dependencies later if there are no ned dependencies files added in package.json 
+
+in python requirement.txt is the file which contains the dependencies 
+
+in every project we are going to copy the dependencies files first and download it then we are going to add source code file 
+
+
+
+dot net dockerfile
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY . .
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR /app
+COPY --from=build /app/publish .
+EXPOSE 5000
+CMD ["dotnet","dotnet-demoapp.dll"]
+
+try to make dockerimage small In size and make the docker image creating process very fast
+
+package-lock.json >> contains the information about the versions of the dependencies 
+
+
+python dockerfile
+
+# Use a lightweight Python base image
+FROM python:3.9-slim-buster
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy app code
+COPY run.py .
+COPY app/ ./app
+
+# Expose the port used by Flask
+EXPOSE 5000
+
+# Run the application
+CMD ["python", "run.py"]
+
+multistage build
