@@ -173,3 +173,103 @@ EXPOSE 5000
 CMD ["python", "run.py"]
 
 multistage build
+
+multistage dockerfile >> in java if want to build anyapplication you need to run xyz.jar so we need to have this file mentioned in Dockerfile >> docker image is going to be hughe if we follow this approach
+mvn package going to download lots of dependencies, docker image building procelss is going to take lot of time
+writing docker file in two stages 
+
+stage 1:
+F baseimage
+W /app
+R dependencies
+R jar
+
+stage 2:
+F baseimage
+W /app
+C buildstage/*.jar .
+E 
+CMD java -jar 
+
+building of application is done in one stage like genertation of jar file in second stage we are going to copy the jar file only excluding the dependencies and source code, so final docker image will be the size of stage 2.
+
+# ===== Build Stage =====
+FROM maven:3.9.9-eclipse-temurin-17 AS build
+WORKDIR /app
+
+# Copy pom.xml first to leverage Docker layer caching
+COPY pom.xml .
+
+# Pre-download dependencies (faster rebuilds)
+RUN mvn -B -q -DskipTests dependency:go-offline     >> -B means there will be no promt comming  and dependencies are going to download offline
+
+# Copy project source
+COPY src ./src    >> copying the application soucre code
+
+# Build the JAR (skip tests for faster build)
+RUN mvn clean package -DskipTests  >> skipping the test cases and building the application jar file /app/target/*.jar file
+
+# ===== Runtime Stage =====
+FROM eclipse-temurin:17-jre-alpine   >> taking the base image which contains the jdk only as maven not required now  this base image will be small in size
+WORKDIR /app
+
+# Copy built jar from build stage
+COPY --from=build /app/target/*.jar app.jar  >> copying something from the previuos stage 
+
+# Expose app port
+EXPOSE 8080
+
+# Run the app
+ENTRYPOINT ["java", "-jar", "app.jar"] 
+
+when docker image is small in size then the file is easily portable 
+
+registry is the combination of repositories in repo we can save multiple vesrions of the images 
+
+Dockerhub >> free (public), private (paid) >> ECR, ACR, Nexus, Jfrog 
+
+username/image:tag >> Dockerhub
+
+Registryurl/image:tag
+
+docker login -u harshad6989
+docker push <imagename> it will not work as it does not know where the image needs to pushed in which repository
+
+docker tag java-app:v1 harshad6989/java-app:v1
+
+name: ci
+
+on:
+  push:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Set up QEMU                           Quick EMUlator
+        uses: docker/setup-qemu-action@v4           necessary in we build docker image we are executing pipeline on linux but if we build docker image which conatins mac os image then there will be no issue
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      -
+        name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          push: true
+          tags: user/app:latest
+		  
+		  
+automating the tag or commit id using the github veraibles
+
+github.sha
+github.run_number
+user/app:latest
+user/app:${{ github.sha }}
+user/app:${{ github.run_number }}
