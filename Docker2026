@@ -273,3 +273,105 @@ github.run_number
 user/app:latest
 user/app:${{ github.sha }}
 user/app:${{ github.run_number }}
+
+
+
+in docker we have used the single conatiner applications but for multi container applications we need to use docker compose
+if we have to use differenet conatiners like frontend, backend, database then they should be connected with each other in same network
+
+we create the script using docker compose we will define services >> fromtend ports and volume then in service two we will define backend port and volume
+same for database 
+
+once we install docker compose, docker compose will be reponsible for mangaing this containers 
+
+MongoDB (Database) + Mongoexpress (UI)
+here one conatinner is DB but we cant see the mongo db output of UI for that purpose we use mongoexpress as UI tool
+
+docker network should be created avilable, voulme should be there (named volume)
+mongo-data:/var/data
+setting user and password of DB along with port and image for mongo db
+MONGO DB: Network, volume, user/password, port, image 
+MONGO EXPRESS: Network, DB-Server, DB username and passowrd, UI-creds(password on UI for users), port mapping, mongo express image 
+
+docker run -d -p 8081:8081 mongo-express
+
+docker run -d \
+-p 8081:8081 \
+mongo-express
+
+
+
+docker run -d\
+--name mongodb\
+--network mongo-network\
+-v mongo-data:/data/db\                >> /data/db will be mapped inside the conatiner to the mongo-data folder on the vm 
+-e MONGO_INITDB_ROOT_USERNAME=admin\
+-e MONGO_INITDB_ROOT_PASSWORD=admin123\
+-p 27017:27017\
+mongo:7 
+
+docker network create mongo-network 
+docker volume create mongo-data 
+docker volume ls
+docker network ls
+
+/var/lib/docker/volumes 
+ 
+docker run -d\
+--name mongo-express\
+--network mongo-network\
+-p 8081:8081
+-e ME_CONFIG_MONGODB_ADMINUSERNAME=admin\
+-e ME_CONFIG_MONGODB_ADMINPASSWORD=admin123\
+-e ME_CONFIG_MONDODB_SERVER=mongodb\
+-e ME_CONFIG_BASICAUTH_USERNAME=admin\
+-e ME_CONFIG_BASICAUTH_PASSWORD=admin123\
+mongo-express
+
+when we create the docker volume its persistence when we delete the conatiner the volume remains there when we create the new conatiner then 
+old volume gets attached nut keep in mind that the mongodb database should be started first before mongo express
+
+when we use docker compose it will not take the deafult volume which we have crteated for the docker it will create its own volume for docker compose
+
+
+vi docker-compose.yaml  >>
+services:
+  mongodb:
+    image: mongo:7
+	container_name: mongodb
+	restart: unless-stopped
+	ports:
+	  - "27017:27017"
+	environment:
+	  MONGO_INITDB_ROOT_USERNAME=admin\
+      MONGO_INITDB_ROOT_PASSWORD=admin123\
+	volumes:
+	  - mongo-data:/data/db
+	networks:
+	  - mongo-network
+	  
+	  
+  mongo-express:
+    image: mongo-express:1.0.2
+	container_name: mongo-express
+	restart: unless-stopped
+	depends_on:
+	  - mongodb
+	ports:
+	  - "8081:8081"
+	environment:
+	  ME_CONFIG_MONGODB_ADMINUSERNAME=admin\
+      ME_CONFIG_MONGODB_ADMINPASSWORD=admin123\
+      ME_CONFIG_MONDODB_SERVER=mongodb\
+      ME_CONFIG_BASICAUTH_USERNAME=admin\
+      ME_CONFIG_BASICAUTH_PASSWORD=admin123\
+    networks:
+	  - mongo-network
+	  
+	networks:
+	  mongo-network:
+	  
+	volumes:
+	  mongo-data:
+
+docker compose up
