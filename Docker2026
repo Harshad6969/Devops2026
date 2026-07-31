@@ -375,3 +375,10 @@ services:
 	  mongo-data:
 
 docker compose up
+
+when ever we create the image from the dockerfile from security point of view the things written in dockerfile should be executed securily
+like dont give root access to docker conatiner 
+jar file ownership should be given to other user rather than root user so other usershould not execute the jar file
+dockerfile should be multistage 
+copying the dependency file early so that we can download dependencies earlier and save them in cache 
+base image used in docker file should be as small as possible 
