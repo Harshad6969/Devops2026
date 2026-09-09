@@ -1,1 +1,36 @@
+4 Types of issues:
 
+a. Language Errors>> Missing braces, wrong indetation, Typo.  HCL (declrative configuration language approach).
+b. State errors >> Drifts (Manually changes something managed by terraform), deleted or moved state.
+c. Core errors >> Bugs in Terraform, Dependency graph issue. (issue in terrform inbuild code)
+d. Provider errors >> invalid creds, API limits/Timeouts, Wrong arguments in the resource (autheication with the aws and azure then its provider task to make communication)
+
+terraform fmt: formats terrfaorm configuration files to canonical styles 
+terraform validate: performs static validation of terraform configuration syntax and structure
+
+srtring interpoliation
+
+tags = {
+  Name = $var.name-learn    #this is not correct one
+}
+
+  Name = "${var.name}-learn"
+
+#terraform fmt
+#terraform init
+#terraform validate
+cycle error >> highlights the mutual dependency between two resources (instances of circular logic in terraform dependency tree) as both resources are dependenet on each other
+terrofrom gets confused like which resource to create first so we need to break the dependency 
+we will create the dependency in such a way that terraform create the resources
+
+invalid referenece >> slpat expresssion it only passes list types
+missing resource instance key >>
+
+
+command to create the logging mechnaism for 
+export TF_LOG_CORE=TRACE
+export TF_LOG_PROVIDER=TRACE
+export TF_LOG_PATH=logs.txt
+
+command to remove the logging mechnaism 
+export TF_LOG_PROVIDER=
