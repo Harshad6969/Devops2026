@@ -46,3 +46,5 @@ terraform provides some arguments which can be used in the script like if we wan
 terraform atlantis, terraform grunt, terraform cloud 
 
 terraform cloud, terraform secret
+
+drift in terraform
