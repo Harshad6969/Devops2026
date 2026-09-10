@@ -34,3 +34,15 @@ export TF_LOG_PATH=logs.txt
 
 command to remove the logging mechnaism 
 export TF_LOG_PROVIDER=
+export TF_LOG_CORE=
+
+#terraform console   >> command used to get the output in fastest manner 
+
+use of local block is to define the name vaiables, we can refer the local block in the root module but variable can be provided in differenet module.
+
+what is for_each expression in terraform for_each is meta argument or generic expression 
+terraform provides some arguments which can be used in the script like if we want to use the multiple instance of same resource
+
+terraform atlantis, terraform grunt, terraform cloud 
+
+terraform cloud, terraform secret
