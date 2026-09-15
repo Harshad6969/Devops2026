@@ -53,4 +53,10 @@ Ansible (playbooks and dynamic inventory file), vault roles, project (5 VMs)
 installing java, maven & docker, clone project (exit,pull), build (logs, errorlogs) stdout, stderr, build, login, pushing 
 we will be using dynamic inventory, roles, vault
 
-inventory 
+dynamic inventory >> similar tag for the vm which are going to be used in the multiple vms for there reference
+vault  >> saves sensitive data which can be used in playbook it has its own vault
+ansible-vault create vault.yaml (user/password)
+roles >> roles are like resuable automation it will be like pacjage. repository which can be used to build specific task. it also contains 
+anisble galaxy  >> similiar to helm cart which are like package and written in variable format which can be used at the time of installation of software.
+we get here the pre created roles and collections 
+anisble collection
