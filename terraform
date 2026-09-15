@@ -48,3 +48,9 @@ terraform atlantis, terraform grunt, terraform cloud
 terraform cloud, terraform secret
 
 drift in terraform
+
+Ansible (playbooks and dynamic inventory file), vault roles, project (5 VMs) 
+installing java, maven & docker, clone project (exit,pull), build (logs, errorlogs) stdout, stderr, build, login, pushing 
+we will be using dynamic inventory, roles, vault
+
+inventory 
