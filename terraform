@@ -59,4 +59,92 @@ ansible-vault create vault.yaml (user/password)
 roles >> roles are like resuable automation it will be like pacjage. repository which can be used to build specific task. it also contains 
 anisble galaxy  >> similiar to helm cart which are like package and written in variable format which can be used at the time of installation of software.
 we get here the pre created roles and collections 
-anisble collection
+anisble collection 
+ansible can be used in setting up local kubernetes cluster (like kubeadm, kubectl, containerd), also can be used in eks worker node but it should have required permissions.
+modules >> small peace of code which can perform speific action
+tasks >> we can use multiple module to perform multiple tasks
+play >> if we have multiple tasks then we can use play
+playbook >> combination of multiple plays (each play will have its own task)
+
+playbook example 
+
+- name:<Name of the play>
+  hosts: <Target hosts>
+  become: <yes/no>
+  tasks:
+  - name: <Tak description>
+    <module>:
+      <module-option>
+
+create the 6 virtual machines in aws and using for loop change the name of the vm, i master node
+ssh port should be open 25gb storage 
+key: environment, value: dev,
+key: Role, Value: web
+instance type: t2.small
+
+install AWS CLI on the ansible master node >> sudo apt update >> install aws cli  >> create user and generetae the access key >> aws configure >> provide access key and 
+secret access key >> install python and install latest package of ansible on the vm 
+
+create the script from the google for naming all the machnies in proper order 
+copy the public key of the ansible master in all the worker machines
+
+in ansible there are so many modlues but we cant learn it but if you practice you can gain the knowledge
+change the permission of the scripts >> sudo chmod +x tagging.sh
+
+ansible should have access to all the ip address of the vms 
+ssh-keygen -t rsa -b 4096 -C "Ansible-Master"   >> public key gets generated
+
+create one ansible.cong file 
+>>
+[defaults]
+inventory=./inventory/aws_ec2.yaml
+host_key_cgecking = false
+
+[ssh_connection]
+ssh_args= -o StrictHostKeyChecking=no -o UserKnowHostsFiles=/dev/null   >> forces host key checking
+
+create the inventory file 
+
+plugin: amazon.aws_aws_ec2
+regions:
+ - ap-south-1
+filters:
+ tag:Environment:dev
+ tagRole: web
+ instance-state-name: running
+compose:
+ ansible_host:public_ip_address
+keyed_groups:
+ -key:tags.Names
+  prefix: name
+ -key:tags.Environment
+  prefix:env
+
+install venv module
+create virtual environment 
+activate it
+install required python packages, ansible-galaxy collections, ansible-inventory -i inventory/aws_ec2.yaml --graph
+copy the private key of the vm on the ansible master vm
+sudo chmod 400 DevOps-Shack.pem
+create the script copy.sh which will copy the public key to all the target machines
+run this command >> ssh ubuntu@<ip_address>  (now ansible is ready to execute any playbook module on the target machines)
+
+yaml file 
+- name: Install NGINX Web Server
+  hosts: env_dev
+  become : yes
+  tasks:
+    - name: Install-Nginx
+      apt:                                      >> installing deleting
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: Start nginx service
+      service:                                  >> start, reboot, etc
+        name: nginx
+        state: started
+        enabled: yes
+
+# ansible-playbook -i inventory/aws_ec2.yaml -l env_dev
+
+
