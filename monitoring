@@ -1,0 +1,175 @@
+peed efficeincy, same pipeline for all service, multiple pipeline for multiple services, problem of management 
+
+gitleaks, checkov (global level execution), detect changes
+
+trivy fs scan , building docker image,scaing docker image, pushing docker image, 
+
+github container registry  (kindly keep the latests 5 build only)
+
+write the stages for every components in form of matrix 
+
+
+quality gates checks 
+
+Mega-Project-CI  >> 2 build only >> creting template and writing stages (no two stages can have the same name)
+
+we need to configure the plugins 
+
+1.stages >> git checkout 
+
+2.compilation of project  (mvn compile)
+
+3.testing  (mvn test)
+
+
+4.trivy file system scan ( sh "trivy fs --format tabular -o fs-report.html ." )
+sonar server and sonar scanner this are two different tools
+
+5. sonar analysis (
+
+steps {
+   withSonarQubeEnv(CredentialsId: 'sonar-token') {
+     sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectkey=gcbank -Dsonar.projectName=gcbank \
+	 -Dsonar.java.binaries=target '''
+   }
+
+6. Quality Gate Check ( waitForQualityGate abortPipeline: false, credentials: 'sonar-token' )
+
+7. Build (mvn package)
+
+8. Publish To Nexus ( mvn deploy )
+
+whenever the arifact gets created for the production then it will get into maven releases for lower env it will go to snapshort repo in nexus.  (update the content in pom.xml)
+
+managed files >> add new config >> do the changes in setting.xml files
+
+9. Docker image build & Tag  (sh "doceker build -t harshadbhargude:$IMAGE")
+jenkins credentials provider 
+
+10. Scan Image (sh "trivy image --format label -o image-report.html harshadbhargude/$IMAGE_TAG")
+
+11. push Docker Image (sh "dockerpush harshadbhargude/bankapp:$IMAGE_TAG")
+
+12. update Manifest File in Mega-Project-CD
+
+
+now image should have been updated and code is working fine ( now configure the mail notification)
+
+open the required ports in ec2 instance 582 port needs to be openeded  (email notification and extended email notification)
+
+we need define the email notification in the post option
+
+
+setting up web hook triggers when ever there is change in github branch then the pipeline will get triggered 
+
+jenkins >> manage jenkins >> generic webhook trigger (install)
+
+
+=======================================================================
+
+eksctl, awscli, heml, terraform, IAM (create access token), create the kubeconfig file, associate IAM OIDC provider, create an IAM service account (used for crateting the volume dynakically)
+
+eks ctl uses the cloudformation stack to create the resources
+
+
+monitoring 
+
+blackbox exporter (scarps the metrx from the application or website), JMK , windows exporter, node exporter (website avialbe or not how long website takes to response)
+
+datasource >> promethues, vicrtrous metrix datasource, influxdb datasource 
+
+promotheus is time series datasource ( getting information on regular interval of time midsacle or small scale project monitoring) works on pull kind of metrix (scrapt the metrix)
+
+victoria metrix >> high volume data collection similar to prometeheus used for analysing large amount of data
+
+influxdb works on push type of approach (it sends some data towards the application then application will share the response to the data and influxDB will analyise the data and share the output)
+
+exporter scraps the matrix and will share it with datasource and grafana will show the data in human readiable format 
+
+========================================================================================
+
+accessing the logs of application 
+
+ELK STACK combinitaion of multiple tools
+
+we get the logs >> process the data, convert it into catgories format and visualizing it
+
+get logs >> ship it >> procees it >> index it >> visualize it 
+
+Elastic search  >> indexes the logs 
+logstash/filebeat  >> logstacsh user for heavy data processsing for complex data it there is not complex data then we can use filebeat which collects or fetch the logs and process it
+kibana  >> used for data visualixzation
+
+
+filebeat (harvester, spooler, publisher)
+
+harvester >> worker seeting in filebeat which reads the logs line by line it keeps the track at which line it has read the log 
+
+processing >> if we have a log file and there are two lines avilable it parses the data disuecting and conversion of data into json formation (parsing the data)
+
+spooler >> what ever data is proccessed or collected is stored in splooer in form of batches (spoller is like bucket)  there are timeout set for the spooler 
+
+publisher >> it bick up the batches from the splooer and forwrds it to the elsticsearch
+
+
+elasticserah >> we we want to find some thing in detailed manner then we use elasticserach in milliseconds elasticserach is like google search for our logs it indexes the data 
+
+it breaks the logs and convert it into readble format it keeps the data into searten format  elasticserach performs the reverse indexing 
+
+kibana is the visulazation and analytic tool for elasticsearch 
+
+
+filebeat (raw format to proper format) or logstacsh  >> elasticsearch (fask availability of data)
+
+filebeat will be deployed as deamonset on every workernode of the pod 
+
+install kubectl, generate kubeconfig
+
+install helm, add repo to our logging tool, add helmchart repo for elaticsearch repo chat, update the repo , create the storageclass 
+
+helm upgrdae --install elasticsearch elastic/elasticsearch -f elasticsearch.yaml -n logging
+
+kubectl get all -n logging 
+
+setup the fikebeat 
+
+helm upgrade --install filebeat elastic/filebeat --version 8.5.1 -f filebeat.yaml -n logging   (custom values.yaml file ae used)
+
+
+kafka >> any of the service working in same application needs to send the http request to the enother service  to establish the communication with each other if any service gets down then the coummincation establishment get stops
+
+replay data
+
+kafka is connected to the each of the microservice 
+
+kafka is open source distributed event streaming platform 
+
+better definition kafka is buffer (log queue) + communication hub 
+
+core componenets in kafka >> 
+
+event (message) : 
+
+{ 
+  "event": "order-email",
+  "orderid": "101",
+  "amount": 1200,
+}
+
+producer (any service which is going to write the message for the kafka) producers writes to the topic and conzumers reads from the topic 
+
+Topic its refers to the category or folder.
+
+partition order is the partition of the folders or category partitioning the order makes the kafka for prarallel jobs so that order can be processed where fast 
+
+offset  (its the unique sequential id for the messages)
+
+consumer
+
+broker & cluster (we have single kafka server then it is called as the broker if there are multiple kafka servers then  it is called as cluster)
+
+events & messages, producer, topic, partition, offset, consumers , Broker & Cluster
+
+alertmanager, nodeexporter, prometeheus, blackbox exporter, grafana 
+
+each nodes used for kuberenets in each node node expoter will be setup if website goes down then nodeexpoter will assume that vm is down 
