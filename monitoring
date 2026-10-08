@@ -173,3 +173,73 @@ events & messages, producer, topic, partition, offset, consumers , Broker & Clus
 alertmanager, nodeexporter, prometeheus, blackbox exporter, grafana 
 
 each nodes used for kuberenets in each node node expoter will be setup if website goes down then nodeexpoter will assume that vm is down 
+
+gitpull >. gitadd >> git commit >> gitpush
+
+monitoring >> seeting monitroing locally (grafa, prometheus, node exporter), Docker (monitroing website, node resources(RAM,CPU,Disk)), Kubernetes (using helm)
+
+
+1.monitoring checks with respect to website: DNS Resolution, website rechable or not, TCP connection allowed or not, SSL enabled or not.
+
+2. Node Monitoring >> POD, CPU,RAM  if utilization goes beyond 80% then mail will be triggered.
+
+
+exporter: node exporter, blackbox exporter (send http request it only require the url details so that it can monitor the website) >> scraps matrix
+datasource: prometheus (timeseries datasource)  >> data provided by prometeus is not formated properly
+visulization: Grafana (visulaize the the data in human readable format and dashboard are created
+ufinalreportslaveAPI >> 
+
+prometheus should be setup on the seperate server, grafana and promtheus should be setup on same server
+
+nodeexpoter uses the daemon it is the process which in background and continusously scrap the metrix
+
+when we install prometheus on the kubernetes then it will install the node exporter on all the worker nodes 
+
+port no: 3000 for grafana, 9090 for prometheus, 9115 for balckbox exporter,9100 for node exporter.   (3000 to 11000)
+
+2 instances (one for monitoring and one for application)
+
+clone the repo which you want to monitor 
+
+mvn package, cd target >> java -jar file.jar
+
+setting up nodeexporter >> install docker >> sudo usermod -aG docker ubuntu   >> newgrp docker >> docker ps 
+
+docker run -d --name=node-exporter -p 9100:9100 --restart=always --pid="host" prom/node-expoeter
+
+sudo apt update 
+
+docker run -d --name=prometheus -p 9090:9090 -v $(pwd)/promethues.yml:/etc/promethues/prometheus.yml prom/prometheus 
+
+docker run -d --name=blackbox-exporter -p 9115:9115 prom/blackbox-exporter
+
+DNS ping ip address, http test on URL, TCP connection check 
+
+docker run -d --name=grafana -p 3000:3000 -v grafana-data:/var/lib/grafana grafana/grafana 
+
+
+garafana >> connection >> add new datasource >> datasource    (it queries the API of prometheus so that grafana can access it  >> dashboard >> import >> 
+
+victoria metrix, websocket API (unlike rest api websocket api it peridocally roatataes the data) application will have ingress type of URL 
+
+
+how can kubernetes manange the differenet tyes od resource allocation >> request (we need to define CPU and memory) and limits (maximum amount) >> deployments 
+
+clusterip is only the default service 
+
+deployment, service, config, secrets, PV+PVC+Storage (gp2 & gp3), volumes (ext4)
+
+CI & CD (DEPLOYMENT) combined >> build >> security checks >> docker image >> update yaml manifest file >> EKS deployment
+
+CI >> Build + security + dockerimage + update in yaml file 
+ 
+Continuous delivery >> continous deployment is done here 
+
+code analysis on sonar (code quality check issues, bugs, how many percentage of source code >> sonarqube need to be runned after testing is done 80% of code should be tested.
+
+configuring the code is added
+
+
+IAC + CICD + Monitoring
+
+nexus
