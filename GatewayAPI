@@ -1,0 +1,85 @@
+when we deploy application application will run as pod ip address of pods are not stable to resolve this problem we use service we use the service of type service IP ip address of the pod get changes after restart, but
+ip address of service will not change but the services can only access through internally to allow external access we need to use ingress or API Gateway.
+
+for ingress we require ingress resource and ingress controller. in ingress yaml we define the ingress routing rules for implementing this rule we require ingress controller
+
+we nginx ingress controller, aws elb controller, traffic controller, haproxy controller
+
+riuting rules + controller
+
+internet >> xyz.com  >> cloud loadbalancer  >> ingress controller service >> application service >> application pod 
+
+
+limitation of ingress 
+
+its very controller specific its support only http routing so if some one types on https then request should be forwarded to https only
+timeouts
+security rules 
+redirecting https url to http for this need to mention annotation in ingress file >> so need to deine two diffrenet annotation so the code is not portable as code needs to be changed 
+
+1. code is not portable and we need to use annotations but annotations are different for differenet controllers 
+
+but 
+
+ingress API version  >> apiVersion: networking.k8s.io/v1  >> we need to define more 
+gateway API version  >> gateway.networking.k8s.io/v1  >> its more specific  >> this code is portable >> most of the features are standarized 
+
+
+gateway api example:
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+spec:
+  rules:
+  - backendRefs
+    - name: app-v1
+	  port: 80
+	  weight: 80
+	- name: app-v2
+	  port: 80
+	  weight: 20
+
+example in ingress.
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/canary:"true"
+	nginx.ingress.kubernetes.io/canary-weight:"20"
+	
+2. there is no clear seperation of the duities in ingress like domain, tls certificates, routing, explosure will be done by the ingress so if any one get access of ingress thenhe can hack whole thing like there
+is whole dependency on the one person but in case of gateway api
+
+Gateway component will be responsible for load balancer, ports, TLS, Internet entry 
+HTTP route componenet will define the path, backend services riuting will be handled here 
+
+there is proper role based access control 
+
+kubernetes doesnt understand what is api gateway
+
+in gateway API we have 
+gatewayapi and controller 
+
+controller will be kgateway  we need to tell kuberenets about new resources for that we require the custom resource definiation we need to add unknown objects in it.
+
+we need two crd one for kgateway, second one will be for gateway api (httproute, gateway)
+
+using crd kuberneets will undersnatd the these are the valid resources 
+
+we need to install kgateway controller its the implimentation of the gateway API rules will be implemented by the kgaateway controller 
+
+deoloying the application
+
+gateway creation for external access entrypoint 
+
+http route creation inside this we need to define the domain and routing of the microservices  (traffice flow)
+
+
+user puts url >> url get translated in cloud load balancer url >> gateawy service (type loadbalancer) envoy pods are crrated when we setup kgateway controller envoy pods are seted with its own service its is resbonisble
+for traffic flow and routing envory pods forwards the request to the envoy gateway proxy pod  (we createc the gateway abd httproute inside this we define traffic routing(how traffic eneters and how it will 
+be trasfered to differenet services) this will be read by the kgatway controller and it gets converted them into envoy configuration as envoy doseent understand the normal request after that request is trasfered to application service
+and application service forwars it to application pod     
+
+sudo apt update 
+
+clone the repo install aws cli and credentials >> create the aws accsess key and secret keys >> install terraform 
+
+terraform init, install the cluster , terraform apply --autoapprove
