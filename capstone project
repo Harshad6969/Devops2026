@@ -1,0 +1,29 @@
+Phase 1: INFRA
+
+EKS CLUSTER, SONARQUBE, JENKINS, HASHICROP VAULT, SECURITY: GITLEAKS & TRIVY & CHECKOV, MONITORING: PROMETHEUS, GRAFANA, 
+
+PHASE 2: REPOS MANAGEMENT
+APPLICATION REPO(CAPSTONE CI & CD REPO) & IAC REPO (TERRAFORM)
+
+PHASE 3: CICD
+
+CICD PIPELINE, AUTOMATION(IF ANYTHING GET CHNAGES AUTOCHANGES SHOULD HAPPEN HERE), SECURITY, MAIL NOTIFICATION
+
+PHASE 4: MONITORING STACK 
+SETTING PROMETHEUS, GRAFANA AND HOW THIS TOOLS WILL MONIROR OUR APPLICATION 
+
+setting EKS CLUSTER, Setting SONARQUBE and we are going to use postgress sql for setting SONARQUBE, Setting up grafana & prometheus in monitoring namespace, hashicrop vault will be
+used in highly available setup same pods with multiple content will be deployed along with hasicrop for injecting the vaules in application pod 
+
+application deployment : we will deploy mongodb as statefulset so that we can handel the failure statefuk set means new pod which gets created will get create with same name as 
+previuosly like (mongo0, mongo1, mong2) this is called table identity each momgodb will have its own voulme, we use clusterip service ti get the access of pod externally we use ingress
+and ssl certificate 
+
+cicd stages >>
+
+setting up jenkins on ec2 machine jira tickets will be created for the new requirement ticket will be assigned to the developer and developer will test the code locally then he will
+push it into gethub like (dev, main, feature branch), developer will push the code into feature branch and then faeture branch will be mergerd into dev branch.
+
+there will be dev qa ppd production env
+
+there will be two clusters one for production & another for production , once 
