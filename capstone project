@@ -26,4 +26,85 @@ push it into gethub like (dev, main, feature branch), developer will push the co
 
 there will be dev qa ppd production env
 
-there will be two clusters one for production & another for production , once 
+there will be two clusters one for dev,QA,UAT & another for production
+
+password API keys and token should not be added in code for tht purpose we use gitleak tools, while webhooks are used to autotrigger the 
+CI pipeline if anything gets pushed into main branch
+pre-build phase : gitleaks >> compile (finding the syntax based error) >> dependency (.net restore) check, trivy (check the vulnariable dependencies), testing(running unit test cases) >> SonarQube analysis(used to find out quality of the code  >> quality check (cod compliance check like we can define that our codes must not have more that 5 bugs or quality of code can be defined)
+ 
+build phase: build application build docker image >> scanning the docker image with trivy >> then image is pushed in docker hub
+post build phase:
+ 
+we need to use AWS CLI for connecting the ec2 instance with AWS >> create the user in AWS and generate the access key and secret access key
+aws configure >> access key id & secret access key
+ 
+clone the repo for project regarding the terraform install terraform 
+terraform init, teraform apply --auto-approve
+
+aws configure, AWS access key, AWS Secret Key
+
+be ready with the kubeconfig file so that you can access the cluster we will install the kubectl to access the cluster, installing cert manager, ingress nginx, AWS EBS CSI deriver 
+componenets, helm.
+
+setting up sonarqube in kubernetes using the helm chart
+
+mkdir sonarqube, add helm chart for sonarqube (in helm most of the things are pre configured)
+#service configuration
+#sonarqube deployment configuration
+before deploying any application or any tool make shure the stoarge class is already deployed
+# setting environment variables for sonarqube
+# postgresSQL Configuartion  (username, password, database & storageclass)
+# Monitoring passcode configuration
+# community edition enablement
+
+copy everything and create the values.yaml file and paste the content
+
+mkdir storageclass  (we need to keep the storage class related configuration in this folder)
+#storageclass for EBS
+#MongoDB stateful set (voulme will be created when the pod is scheduled)
+kubectl apply -f sc.yaml 
+kubectl get sc
+helm upgrade --install sonarqube sonarqube/sonarqube --namespace sonarqube -f values.yaml
+we need create our own values.yaml
+kubectl create ns sonarqube 
+helm upgarde install command 
+kubectl get all -n sonarqube (you can see one pod for sonarqube application and another for postgress database)
+we can access the sonarqube from the loadbalancer (loadbalancerurl:portno) 
+
+setting up mongodb stateful set 
+mkdir mongodb (create the mainfest file into mongodb folder)
+kubectl create ns webapps 
+kubectl apply -f manisfest.yaml -n webapps (we deployed mangodb as the stateful state so that the pod can get the stable editenty if pod get deleted and when new pod
+get created with same name but we need to use the headless service which make sure that pod will be named in sequence (mongo01, mongo02, mongo03)
+
+in mongo01, mongo02, mongo03 you sholud know which one is master 
+setup the temorery pod (mongo clinet) for mongo open the momngo sh (use the replicaset initialte in that test pod)
+
+now we will move towordas setting up hashicrop vault
+mkdir vault
+kubectl create ns vault
+helm repo add hashicrop <url>
+create the new values.yaml file for the hashicrop vault 
+vi vault.yaml
+helm upgrade --install vault hashicrop/vault -n vault -f vault-values.yaml
+kubectl get all -n vault
+by default the vault is in sealed state 
+three vault pod and single injector pod 2
+
+expose the vault using the loadbalancer in the service.yaml
+kubectl apply -f service.yaml -n vault
+kubec exec -n vault -it vault-0 --vault operator init (we will get 5 keys to unseal the tokens as its works on shamy share secret algorithm its breaks the single key into 5
+different tokens to unseal the one hashicrop vault we need to use three keys 
+kubectl exec -n vault -it vault-0 -- vault operator unseal <use three differenet keys one by one> >> we need to run the same for all three pods to unseal the three hashicrop vault
+
+now when we run kubectl get pods -n vault then you will see all hshicrop vaults are running
+
+use initial root token to login in vault pod 
+kubectl get svc -n vault
+in secret engine you can store the secret we need to select kv , we need to enable the kuberenetes authentication on k8s cluster 
+kubectl exec -n vault -it vault-0 -- vault auth enable kubernetes 
+create the vault policy 
+pods will be have its own serviec account and we will provide the role based access to that policy
+create the service account for the pods (this service account will be used for fetching the secrets from the vault)
+create the vault role for the service account 
+service account will have its own secret (jwt token which is signed by kubernetes certificate once vault identifies the token vault send its own token)
