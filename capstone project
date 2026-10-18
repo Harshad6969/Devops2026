@@ -107,4 +107,111 @@ create the vault policy
 pods will be have its own serviec account and we will provide the role based access to that policy
 create the service account for the pods (this service account will be used for fetching the secrets from the vault)
 create the vault role for the service account 
+configuring kubernetes auth backend 
 service account will have its own secret (jwt token which is signed by kubernetes certificate once vault identifies the token vault send its own token)
+
+once the policy is created we need to apply it into the vault volume 
+kubectl cp noteapp-policy.hcl vault/vault-0:/tmp/noteapp-policy.hcl 
+kubecttl exec -n vault -it vault-0 -- vault policy write notepp /tmp/noteapp-policy.hcl
+now apply the config into the vault kubectl exec -n vault -it vault-0 --vault write auth/kubernetes/config \
+now we need to enable the secret engine always enable kv v2 version of encryption
+kubectl exec -n vault -it vault-0 -- value secret enable -path=secret -version=2 kv
+now store the secret by going into the vault pod and enjecting the values 
+
+mkdir monitoring
+seeting up monitoring using helm add the helm repo and add the ciustom values.yaml file 
+alertmanager, nodeexporter, grafana, prometeheus, storage, kubestatemetrix
+
+helm upgarde --install monitoring promteheus-community/kube-prometheus-stack -f vaules.yaml -n monitoring --create-namespace 
+now pathch the service for kubeststemetrix, promtheus, nodemetrix with loadbalancer
+
+we are going to setup jenkins on ec2 as of now EKS is using the containerd as docker deamon we wont be able to execute the docker command on EKS so we will set up jenkins on 
+ec2 instance
+install jdk 21 headless, install jenkins now 
+sudo cat /var/lib/jenkins/secret/initialadminpassword
+manage jenkins plugins >> satgeview, sonarqube scanner (generated the reports, performs the sccaning & shares the report to the sonarqube server)
+installing docker on jenkins 
+sudo usermod-aG docker jenkins  (restart jenkins)
+newgrp docker 
+newitem give name >> type pipeline >> define maxmium no of builds which we need to keep into history is 3 last three build as builds occupy the workspace 
+install gitleaks,on jenkins machine install the .net sdk 8 as our project requires it, install trivy on the jenkins machine 
+we have installed sonarqube scanner and configured the sonarqube server (tools and system)
+add the github repo and and credentials in pipeline syntax >> generate the github token and add it into jenkins syntax
+
+pipeline {
+  agent any 
+
+  environment {
+      SCANNER_HOME = tools 'sonar-scanner'
+  stages {
+    stage('Git Checkout') {
+      steps {
+          echo 'Hello World'
+      }
+   }
+
+  stages {
+    stage('Gitleak scan') {
+      steps {
+         sh 'gitleak detect --report fromat-json --report path gitleaks  report.json --exit code=1'
+      }
+   }
+
+  stages {
+    stage('compile') {
+      steps {
+          sh 'dotnet build'
+      }
+   }
+
+  stages {
+    stage('Trivy FS Scan') {
+      steps {
+         sh 'trivy fs --format table -o trivy-fs-report.html .'
+      }
+   }
+
+  stages {
+    stage('Unit Testing') {
+      steps {
+          echo 'dotnet test'
+      }
+   }
+
+  stages {
+    stage('SonarQube Analysis') {
+      steps {
+          withSonarQubeEnv('sonar') {
+              sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=NoteApp \
+                       -Dsonar.projectkey=NoteApp '''
+          }
+      }
+   }
+
+  stages {
+    stage('Hello World') {
+      steps {
+          echo 'Hello World'
+      }
+   }
+
+  stages {
+    stage('Hello World') {
+      steps {
+          echo 'Hello World'
+      }
+   }
+
+  stages {
+    stage('Hello World') {
+      steps {
+          echo 'Hello World'
+      }
+   }
+
+  stages {
+    stage('Hello World') {
+      steps {
+          echo 'Hello World'
+      }
+   }
