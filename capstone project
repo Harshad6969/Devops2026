@@ -129,12 +129,12 @@ we are going to setup jenkins on ec2 as of now EKS is using the containerd as do
 ec2 instance
 install jdk 21 headless, install jenkins now 
 sudo cat /var/lib/jenkins/secret/initialadminpassword
-manage jenkins plugins >> satgeview, sonarqube scanner (generated the reports, performs the sccaning & shares the report to the sonarqube server)
-installing docker on jenkins 
+manage jenkins plugins >> satgeview, sonarqube scanner (generated the reports, performs the sccaning & shares the report to the sonarqube server), docker pipeline
+installing docker on jenkins
 sudo usermod-aG docker jenkins  (restart jenkins)
 newgrp docker 
 newitem give name >> type pipeline >> define maxmium no of builds which we need to keep into history is 3 last three build as builds occupy the workspace 
-install gitleaks,on jenkins machine install the .net sdk 8 as our project requires it, install trivy on the jenkins machine 
+install gitleaks,on jenkins machine install the .net sdk 8 as our project requires it, install trivy on the jenkins machine
 we have installed sonarqube scanner and configured the sonarqube server (tools and system)
 add the github repo and and credentials in pipeline syntax >> generate the github token and add it into jenkins syntax
 
@@ -142,7 +142,8 @@ pipeline {
   agent any 
 
   environment {
-      SCANNER_HOME = tools 'sonar-scanner'
+      SCANNER_HOME = tool 'sonar-scanner'
+      IMAGE_TAG = "v${BUILD_NUMBER}"
   stages {
     stage('Git Checkout') {
       steps {
@@ -189,9 +190,70 @@ pipeline {
    }
 
   stages {
-    stage('Hello World') {
+    stage('Quality Gate Check') {
       steps {
-          echo 'Hello World'
+          timeout(time: 1,unit: 'HOURS') {
+              waitforQualityGate abortPipeline: false, credenteials: 'sonar-token'
+
+          }
+      }
+   }
+
+  stages {
+    stage('Building the Docker Image & Tag Image') {
+      steps {
+          script {
+              withDockerRegistry(credentaialsId: 'docker-cred') {
+                  sh "docker build -t harshad/notepad:$IMAGE_TAG ."
+            }
+          }
+      }
+   }
+
+  stages {
+    stage('trivy Image Scan') {
+      steps {
+          sh 'trivy image --format table -o trivy-image-report.html harshad/notepad:$IMAGE_TAG'
+      }
+   }
+
+  stages {
+    stage('Push Image') {
+      steps {
+          script {
+              withDockerRegistry(credentaialsId: 'docker-cred') {
+                  sh "docker push harshad/notepad:$IMAGE_TAG"
+            }
+          }
+      }
+   }
+
+  stages {
+    stage('Update Manifest File CD Repo') {
+      steps {
+          script {
+              cleanws()
+              withCredentials([usernamePassword(credentialsId: 'git-token', passwordVariable: 'GIT_PASSWORD', usernameVairable: 'GIT_USERNAME')])
+                  sh '''
+                       # clone the CD Repo
+                       git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/harshadbhargude/CapStone-DotNET-Mongo-CD.git
+                       # update the tag in manifest
+                       cd CapStone-DotNET-Mongo-CD
+                       sed -i "s|harshadbhargude/noteapp:.*|harshadbhargude/noteapp:${IMAGE_TAG}|" Manifest/mainfest.yaml
+
+                       #confirm changes
+                       echo "update manifest file contents:"
+                       cat Manifest/manifest.yaml
+
+                      # commit and push the changes
+                      git config user.name "jenkins"
+                      git config user.email "jenkins@example.com"
+                      git add Manifest/manifest.yaml
+                      git commit -m "update image tag to ${IAMGE_TAG}"
+                      git push origin main
+                      '''
+                   }
+          }
       }
    }
 
@@ -202,16 +264,10 @@ pipeline {
       }
    }
 
-  stages {
-    stage('Hello World') {
-      steps {
-          echo 'Hello World'
-      }
-   }
 
-  stages {
-    stage('Hello World') {
-      steps {
-          echo 'Hello World'
-      }
-   }
+we need to configure both email notification and extended email notification
+smpt.gmail.com
+smpt port 587
+create the app password 
+mamage jenkins >> system  >> smpt.gmail.com  >> create the token for the gmail app password and add it into the credentials section
+jenkins >> configure >> generic webhook trigger >> variable ref extension $ref
