@@ -271,3 +271,23 @@ smpt port 587
 create the app password 
 mamage jenkins >> system  >> smpt.gmail.com  >> create the token for the gmail app password and add it into the credentials section
 jenkins >> configure >> generic webhook trigger >> variable ref extension $ref
+
+optional filter
+
+in github add payload url, contenet type json, what event due to which pipeline should be triggeted is pushed event 
+
+trigger the pipeline by doing the change in dockerfile 
+we are going to provide the permission to the service account to perform the deployment of the differenet resources
+service account is already created only update the role 
+apply role, crate the role binding
+create the cluster level reources role and apply it.
+binde the clusterrole with the service account
+create the token in linux machine give name kubectl apply -f sec.yaml -n webapps
+kubectl describe secret mysecretname -n webapps 
+copy the token for later usgae 
+
+
+install jenkins on kubectl authenticate the kubectl with kubernetes we are going to do it using the ci/cd pipeline 
+install plugins like kubernetes, kubernetes credenteials, kubernetes CLI 
+
+kuberenets server endpoint and clustername is required along with namespace 
