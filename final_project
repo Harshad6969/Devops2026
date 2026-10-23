@@ -1,0 +1,36 @@
+
+Techstack used >> CRED based application > create, read, update and read data (add user , read existing users, remove the users)
+usermanagement application 
+
+Technology stack >> frontend (clinet will contain frontend part) >> written in react (react is java script library for building UI (userinterface and UI building) runs inside the browser, react can be used to 
+create theings like buttons, forms, pages (it does not handles the backend services REACT is not the framework but is the library 
+REACT >> build UI, Handels the Users Action 
+
+backend (server will contain the backend part) >> backend is created using the nodejs which is runtime environment (used for running thr javascript language backend on the server its runned outside the browser)
+used for >> creating the API, Process the data, authentication, talk with the database
+
+frontend, backend, database 
+nodejs is ued for backend code configuration, api creation, bussiness logic and talking with database
+user >> react(UI) >> nodejs(API) >> Database
+
+react and nodejs code is written in javascript language
+
+database (MYSQL database we are using) >> it conatins fileds like >> id, name, email, role 
+
+backend is the one who is going to connect with the database nodejs uses npm package its is known as mysql
+in package.json main sql dependency is defined for sql
+
+build tool used is webpack (client) >> public >> bundel.js >> 
+index.html >> bundel.js  in index.html loads the bundel.js file 
+
+API calls >> we are using concept called http client (fetch > build in browser api to call), Axios (libraray used for calling api used in application)
+Docker is used for portability
+kubernetes >> EKS (managed k8s cluster)
+CI/CD >> github actions 
+three tier application >> first layer is >> (presentation layer (frontend >> react, webpacks, vanilla.js, Axios 
+
+tier two >> application layer >> backend pack >> nodejs express, mysql npm package (contains the actula logic) this layer connects tier 1 and tier 3
+
+tier three >> Data layer we are using MYSQL 8.0 with persistence storage (used for storing the user data) only backend can connect with tier three 
+
+when we hit xyz.com >> browser calls the backend then backend calls the database then MYSQL with the required data then SQL calls back to the tier two with data 
