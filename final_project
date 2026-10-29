@@ -34,3 +34,14 @@ tier two >> application layer >> backend pack >> nodejs express, mysql npm packa
 tier three >> Data layer we are using MYSQL 8.0 with persistence storage (used for storing the user data) only backend can connect with tier three 
 
 when we hit xyz.com >> browser calls the backend then backend calls the database then MYSQL with the required data then SQL calls back to the tier two with data 
+
+
+nodejs and sql need to be installed first to run the code locally
+nvm --version
+install modemon (used to install global tools) install mysql inside the terminal 
+
+checkov have lot of policies like multiple rules are defined --framework kubernetes
+
+running the stages sages in parallel which will save lot of time 
+
+jobs >> cloning the repo >> install python >> pip install checkov  >> execute the checkov command >> artifact 
