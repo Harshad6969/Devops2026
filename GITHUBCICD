@@ -106,3 +106,159 @@ jobs:
           name: checkov-k8s-report
           path: checkov-k8s-report.json
           if-no-files-found: warn
+
+  client-trivy-fs:
+    name: Client Trivy FS Scan
+    runs-on: ubuntu-latest
+    needs: gitleaks-scan
+
+    steps:
+      - name: Checkout source code
+        uses: action/checkout@v4
+
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@v0.2.6
+        with:
+          version: latest
+          cache: true
+
+      - name: Vrify Trivy installation
+        run: |
+          trivy --version
+          which trivy
+
+      - name: Run Trivy FS Scan on Client (JSON)
+        run: |
+          trivy fs ./client \
+            --format json \
+            --output client-trivy-fs-report.json \
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --exit-code 0
+
+      - name:  Run Trivy  FS Scan on client (TABLE)
+        run: |
+          trivy fs ./client \
+            --format table \
+            --severity HIGH,CRITICAL \
+            --igonre-unfixed \
+            --exit-code 0 > client-trivy-fs-report.txt
+
+      - name: Upload Server Trivy JSON report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Server-trivy-fs-json-report
+          path: Server-trivy-fs-json-report.json
+
+      - name: Upload Server Trivy TABLE report
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-trivy-fs-table-report
+          path: server-trivy-fs-table-report.txt
+          if-no-files-found: warn
+
+  Server-trivy-fs:
+    name: Server Trivy FS Scan
+    runs-on: ubuntu-latest
+    needs: gitleaks-scan
+
+    steps:
+      - name: Checkout source code
+        uses: action/checkout@v4
+
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@v0.2.6
+        with:
+          version: latest
+          cache: true
+
+      - name: Vrify Trivy installation
+        run: |
+          trivy --version
+          which trivy
+
+      - name: Run Trivy FS Scan on Server (JSON)
+        run: |
+          trivy fs ./client \
+            --format json \
+            --output client-trivy-fs-report.json \
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --exit-code 0
+
+      - name:  Run Trivy  FS Scan on Server (TABLE)
+        run: |
+          trivy fs ./client \
+            --format table \
+            --severity HIGH,CRITICAL \
+            --igonre-unfixed \
+            --exit-code 0 > client-trivy-fs-report.txt
+
+      - name: Upload Server Trivy JSON report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Server-trivy-fs-json-report
+          path: Server-trivy-fs-json-report.json
+
+      - name: Upload Server Trivy TABLE report
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-trivy-fs-table-report
+          path: server-trivy-fs-table-report.txt
+          if-no-files-found: warn
+
+  client-lint:
+    name: Clinet Lint 
+    runs-on: ubuntu-latest
+    needs:
+      - clinet-trivy-fs
+      - checkov-k8s
+      - checkov-dockerfile
+      - checkov-terraform
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - name: Install server dependencies
+        run: npm ci
+
+      - name: Run clinet lint
+        run: npm run lint --if-present
+        continue-on-error: true
+
+  server-lint:
+    name: Server Lint 
+    runs-on: ubuntu-latest
+    needs:
+      - server-trivy-fs
+      - server-k8s
+      - server-dockerfile
+      - server-terraform
+    defaults:
+      run:
+        working-directory: server
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - name: Install server dependencies
+        run: npm ci
+
+      - name: Run server lint
+        run: npm run lint --if-present
+        continue-on-error: true
