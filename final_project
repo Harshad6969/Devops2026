@@ -42,6 +42,19 @@ install modemon (used to install global tools) install mysql inside the terminal
 
 checkov have lot of policies like multiple rules are defined --framework kubernetes
 
+linting is the lighter version of the sonaarqube it going to scan the source code for syntax related issues, bad voding practices, unused variables, formatting issues,
+potential bugs
+
+cloud >> cache (dependency file) >> installing the dependency >> adding the lint command 
+
 running the stages sages in parallel which will save lot of time 
 
 jobs >> cloning the repo >> install python >> pip install checkov  >> execute the checkov command >> artifact 
+
+bundel.js is the main folder 
+
+shift left security working directory should be the clinet folder, cloning the repo, install dependency , npm run build 
+
+clinet, build & port need to be defined bundel.js should be avilable to the backend and nodejs env should be avilable 
+
+dockerfile >> docker image >> conatiner
